@@ -44,12 +44,13 @@ def main():
 
         usr_input =pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]],
                                 columns=['gender','age','hypertension','heart_disease','ever_married','work_type','Residence_type','avg_glucose_level','bmi','smoking_status'])
-        print(usr_input) #'tuple'
         df = pd.read_csv(r'data_strokes_prediction.csv')
         df=df.drop(columns=['id','stroke'])
-
-        df.append(usr_input, ignore_index=True)
-        print(df.tail())
+        df=df.append(usr_input)
+        # print(df.tail(1)) # user answer is the last row
+        dfdum = pd.get_dummies(df, columns=['gender', 'ever_married','work_type', 'Residence_type', 'smoking_status'])
+        print(dfdum.tail(1))
+        print(dfdum.columns)
 
 
 
