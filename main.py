@@ -1,10 +1,14 @@
 from flask import Flask, request, render_template
 import pandas as pd
 import joblib
+from flask_bootstrap import Bootstrap
 
 
 
 app = Flask(__name__)
+from flask_pretty import Prettify
+prettify = Prettify()
+prettify.init_app(app)
 
 genders = ['Female', 'Male', 'Other']
 hypertensions = ['1', '0']
@@ -88,3 +92,4 @@ def main():
 # Running the app
 if __name__ == '__main__':
     app.run(debug = True)
+

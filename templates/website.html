@@ -1,99 +1,96 @@
 <!DOCTYPE html>
 <html>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
     <head>
         <title>Strokes Prediction App</title>
     </head>
 
     <body>
         <form name="form", method="POST", style="text-align: center;">
-
+<br>
             <h1>Stroke predictor</h1>
 
 
             <br>
 
-            Gender  : <select name= "gender" method="GET" action="/">
+            <p> Gender :  <select name= "gender" method="GET" action="/">
                 {% for gender in genders %}
                 <option value= "{{gender}}" SELECTED>{{gender}}</option>"
                 {% endfor %}
             </select>
-
-            <br><br>
-
-            Age: <input type="number" name="age", placeholder="Enter value" required/>
+            </p>
 
 
+            <p>Age :  <input type="number" name="age", placeholder="Enter value" required/></p>
 
 
-            <br><br>
 
-            Hypertension : <select name="hypertension" method="GET" action="/">
+            <p>Hypertension : <select name="hypertension" method="GET" action="/">
                 {% for hypertension in hypertensions %}
                 <option value= "{{hypertension}}" SELECTED>{{hypertension}}</option>"
                 {% endfor %}
-            </select>
+            </select></p>
 
-            <br><br>
 
-            Heart Desease : <select name="heart_disease" method="GET" action="/">
+            <p> Heart Desease : <select name="heart_disease" method="GET" action="/">
                 {% for heart_disease in heart_diseases %}
                 <option value= "{{heart_disease}}" SELECTED>{{heart_disease}}</option>"
                 {% endfor %}
-            </select>
-                        <br><br>
+            </select></p>
 
-            Ever married : <select name="ever_married" method="GET" action="/">
+
+                <p>Ever married : <select name="ever_married" method="GET" action="/">
                 {% for ever_married in ever_marrieds %}
                 <option value= "{{ever_married}}" SELECTED>{{ever_married}}</option>"
                 {% endfor %}
-            </select>
-
-            <br><br>
+            </select></p>
 
 
 
-            Work type: <select name="work_type" method="GET" action="/">
+
+<p> Work type: <select name="work_type" method="GET" action="/">
                 {% for work_type in work_types %}
                 <option value= "{{work_type}}" SELECTED>{{work_type}}</option>"
                 {% endfor %}
-            </select>
-            <br><br>
+            </select></p>
 
 
-            Residence type : <select name="Residence_type" method="GET" action="/">
+
+
+<p>Residence type : <select name="Residence_type" method="GET" action="/">
                 {% for Residence_type in Residence_types %}
                 <option value= "{{Residence_type}}" SELECTED>{{Residence_type}}</option>"
                 {% endfor %}
-            </select>
-            <br><br>
-
-            Average glucose level : <input type="number" name="avg_glucose_level", placeholder="Enter value" required/>
-            <br><br>
-
-            BMI : <input type="number" name="bmi", placeholder="Enter value" required/>
-            <br><br>
+            </select></p>
 
 
-            Smoking status : <select name="smoking_status" method="GET" action="/">
+<p> Average glucose level : <input type="number" name="avg_glucose_level", placeholder="Enter value" required/>
+          </p>
+
+<p>BMI : <input type="number" name="bmi", placeholder="Enter value" required/>
+           </p>
+
+
+<p>Smoking status : <select name="smoking_status" method="GET" action="/">
                 {% for smoking_status in smoking_statuses %}
                 <option value= "{{smoking_status}}" SELECTED>{{smoking_status}}</option>"
                 {% endfor %}
-            </select>
+            </select></p>
+
+
+
+
+
             <br><br>
 
+            <button value="Submit">Verify</button>
 
-
-
-
-
-            <br><br>
-
-            <button value="Submit">Run</button>
-
-            <br><br><br><br>
+            <br>
 
         </form>
-        <p style="text-align: center;">{{ output }}</p>
+
+    <h3 style="text-align: center;">{{ output }}</h3>
     </body>
 </html>
 
