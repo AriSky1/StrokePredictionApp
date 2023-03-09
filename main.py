@@ -49,21 +49,28 @@ def main():
         df=df.append(usr_input)
         # print(df.tail(1)) # user answer is the last row
         dfdum = pd.get_dummies(df, columns=['gender', 'ever_married','work_type', 'Residence_type', 'smoking_status'])
-        print(dfdum.tail(1))
+
+
+        # print(dfdum.tail(1))
         print(dfdum.columns)
 
 
 
 
-
         # Put inputs to dataframe
+        X = dfdum.tail(1)
         # X = pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]])
 
 
 
         # Get prediction
         # prediction = clf.predict(X)[0]
-        prediction =gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status
+        prediction = clf.predict(X)
+        if prediction == 0:
+            prediction = 'Congratulations, no stroke.'
+        if prediction == 1:
+            prediction = 'Oh no, high stroke risk !'
+        # prediction =gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status
 
 
 
