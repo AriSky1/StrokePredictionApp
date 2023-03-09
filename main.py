@@ -7,12 +7,12 @@ import joblib
 app = Flask(__name__)
 
 genders = ['Female', 'Male', 'Other']
-hypertensions = ['Yes', 'No']
-heart_diseases = ['Yes', 'No']
-ever_marrieds = ['Yes', "No"]
-work_types = ['A', 'B ']
-Residence_types = ['A', 'B']
-smoking_statuses = ['A', 'B']
+hypertensions = ['1', '0']
+heart_diseases = ['1', '0']
+ever_marrieds = ['Yes', 'No']
+work_types = ['Private', 'Self-employed', 'Govt_job', 'children', 'Never_worked']
+Residence_types = ['Urban', 'Rural']
+smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -31,19 +31,40 @@ def main():
         hypertension = request.form.get("hypertension")
         heart_disease = request.form.get("heart_disease")
         ever_married = request.form.get("ever_married")
-        work_type= request.form.get("work_type")
-        Residence_type= request.form.get("Residence_type")
-        avg_glucose_level= request.form.get("avg_glucose_level")
-        bmi= request.form.get("bmi")
-        smoking_status= request.form.get("smoking_status")
+        work_type = request.form.get('work_type')
+        Residence_type = request.form.get("Residence_type")
+        avg_glucose_level = request.form.get("avg_glucose_level")
+        bmi = request.form.get("bmi")
+        smoking_status = request.form.get('smoking_status')
+
+
+
+        # Encode
+
+
+        usr_input =pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]],
+                                columns=['gender','age','hypertension','heart_disease','ever_married','work_type','Residence_type','avg_glucose_level','bmi','smoking_status'])
+        print(usr_input) #'tuple'
+        df = pd.read_csv(r'data_strokes_prediction.csv')
+        df=df.drop(columns=['id','stroke'])
+
+        df.append(usr_input, ignore_index=True)
+        print(df.tail())
+
+
+
+
 
         # Put inputs to dataframe
-        # X = pd.DataFrame([[gender_female, gender_male, gender_other, age]],
-        #                  columns=["gender_Female","gender_Male","gender_Other", "age"])
+        # X = pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]])
+
+
 
         # Get prediction
         # prediction = clf.predict(X)[0]
         prediction =gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status
+
+
 
     else:
         prediction = ""
@@ -51,17 +72,6 @@ def main():
     return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
                            ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
                            smoking_statuses=smoking_statuses,output=prediction)
-
-
-
-
-# @app.route("/test" , methods=['GET', 'POST'])
-# def test():
-#     select = request.form.get('comp_gender')
-#     return(str(select)) # just to see what select is
-
-
-
 
 
 

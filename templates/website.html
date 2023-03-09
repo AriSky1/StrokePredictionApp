@@ -10,7 +10,7 @@
 
             <br>
 
-            Gender  : <select name= gender method="GET" action="/">
+            Gender  : <select name= "gender" method="GET" action="/">
                 {% for gender in genders %}
                 <option value= "{{gender}}" SELECTED>{{gender}}</option>"
                 {% endfor %}
@@ -18,7 +18,14 @@
 
             <br><br>
 
-            Hypertension : <select name=hypertension method="GET" action="/">
+            Age: <input type="number" name="age", placeholder="Enter value" required/>
+
+
+
+
+            <br><br>
+
+            Hypertension : <select name="hypertension" method="GET" action="/">
                 {% for hypertension in hypertensions %}
                 <option value= "{{hypertension}}" SELECTED>{{hypertension}}</option>"
                 {% endfor %}
@@ -26,14 +33,14 @@
 
             <br><br>
 
-            Heart Desease : <select name=heart_disease method="GET" action="/">
+            Heart Desease : <select name="heart_disease" method="GET" action="/">
                 {% for heart_disease in heart_diseases %}
                 <option value= "{{heart_disease}}" SELECTED>{{heart_disease}}</option>"
                 {% endfor %}
             </select>
                         <br><br>
 
-            Ever married : <select name=ever_marrieds method="GET" action="/">
+            Ever married : <select name="ever_married" method="GET" action="/">
                 {% for ever_married in ever_marrieds %}
                 <option value= "{{ever_married}}" SELECTED>{{ever_married}}</option>"
                 {% endfor %}
@@ -42,11 +49,8 @@
             <br><br>
 
 
-            Age: <input type="number" name="age", placeholder="Enter value" required/>
-            <br><br>
 
-
-            Work type: <select name=work_types method="GET" action="/">
+            Work type: <select name="work_type" method="GET" action="/">
                 {% for work_type in work_types %}
                 <option value= "{{work_type}}" SELECTED>{{work_type}}</option>"
                 {% endfor %}
@@ -54,15 +58,21 @@
             <br><br>
 
 
-            Residence type : <select name=Residence_types method="GET" action="/">
+            Residence type : <select name="Residence_type" method="GET" action="/">
                 {% for Residence_type in Residence_types %}
                 <option value= "{{Residence_type}}" SELECTED>{{Residence_type}}</option>"
                 {% endfor %}
             </select>
             <br><br>
 
+            Average glucose level : <input type="number" name="avg_glucose_level", placeholder="Enter value" required/>
+            <br><br>
 
-            Smoking status : <select name=smoking_statuses method="GET" action="/">
+            BMI : <input type="number" name="bmi", placeholder="Enter value" required/>
+            <br><br>
+
+
+            Smoking status : <select name="smoking_status" method="GET" action="/">
                 {% for smoking_status in smoking_statuses %}
                 <option value= "{{smoking_status}}" SELECTED>{{smoking_status}}</option>"
                 {% endfor %}
@@ -70,11 +80,9 @@
             <br><br>
 
 
-            Average glucose level : <input type="number" name="avg_glucose_level", placeholder="Enter value" required/>
-            <br><br>
 
-            BMI : <input type="number" name="bmi", placeholder="Enter value" required/>
-            <br><br>
+
+
 
             <br><br>
 
