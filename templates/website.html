@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Strokes Prediction App</title>
+    </head>
+
+    <body>
+        <form name="form", method="POST", style="text-align: center;">
+
+
+            <br>
+
+            Gender  : <select name= gender method="GET" action="/">
+                {% for gender in genders %}
+                <option value= "{{gender}}" SELECTED>{{gender}}</option>"
+                {% endfor %}
+            </select>
+
+            <br><br>
+
+            Hypertension : <select name=hypertension method="GET" action="/">
+                {% for hypertension in hypertensions %}
+                <option value= "{{hypertension}}" SELECTED>{{hypertension}}</option>"
+                {% endfor %}
+            </select>
+
+            <br><br>
+
+            Heart Desease : <select name=heart_disease method="GET" action="/">
+                {% for heart_disease in heart_diseases %}
+                <option value= "{{heart_disease}}" SELECTED>{{heart_disease}}</option>"
+                {% endfor %}
+            </select>
+                        <br><br>
+
+            Ever married : <select name=ever_marrieds method="GET" action="/">
+                {% for ever_married in ever_marrieds %}
+                <option value= "{{ever_married}}" SELECTED>{{ever_married}}</option>"
+                {% endfor %}
+            </select>
+
+            <br><br>
+
+
+            Age: <input type="number" name="age", placeholder="Enter value" required/>
+            <br><br>
+
+
+            Work type: <select name=work_types method="GET" action="/">
+                {% for work_type in work_types %}
+                <option value= "{{work_type}}" SELECTED>{{work_type}}</option>"
+                {% endfor %}
+            </select>
+            <br><br>
+
+
+            Residence type : <select name=Residence_types method="GET" action="/">
+                {% for Residence_type in Residence_types %}
+                <option value= "{{Residence_type}}" SELECTED>{{Residence_type}}</option>"
+                {% endfor %}
+            </select>
+            <br><br>
+
+
+            Smoking status : <select name=smoking_statuses method="GET" action="/">
+                {% for smoking_status in smoking_statuses %}
+                <option value= "{{smoking_status}}" SELECTED>{{smoking_status}}</option>"
+                {% endfor %}
+            </select>
+            <br><br>
+
+
+            Average glucose level : <input type="number" name="avg_glucose_level", placeholder="Enter value" required/>
+            <br><br>
+
+            BMI : <input type="number" name="bmi", placeholder="Enter value" required/>
+            <br><br>
+
+            <br><br>
+
+            <button value="Submit">Run</button>
+
+            <br><br><br><br>
+
+        </form>
+        <p style="text-align: center;">{{ output }}</p>
+    </body>
+</html>
+
+
+
