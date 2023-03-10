@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template
 import pandas as pd
 import joblib
-from flask_bootstrap import Bootstrap
 from sklearn.preprocessing import LabelEncoder
 
 
@@ -57,6 +56,8 @@ def main():
         for col in cat_cols:
             le.fit(df[col])
             df[col] = le.transform(df[col])  # encode categories
+
+        print(df,df.tail())
 
 
         # user input is X
