@@ -71,9 +71,9 @@ def main():
         # prediction = clf.predict(X)[0]
         prediction = clf.predict(X)
         if prediction == 0:
-            prediction = 'Congratulations, no stroke.'
+            prediction = 'Low risk.'
         if prediction == 1:
-            prediction = 'Oh no, high stroke risk !'
+            prediction = 'High stroke risk !'
         # prediction =gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status
 
 
