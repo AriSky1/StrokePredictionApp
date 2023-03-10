@@ -10019,3 +10019,89 @@ ValueError: Invalid classes inferred from unique values of `y`.  Expected: [0 1]
 2023-03-10 02:03:44,037:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\xgboost\sklearn.py:835: UserWarning: `eval_metric` in `fit` method is deprecated for better compatibility with scikit-learn, use `eval_metric` in constructor or`set_params` instead.
   warnings.warn(
 
+2023-03-10 02:24:13,432:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2023-03-10 02:24:13,432:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2023-03-10 02:24:13,432:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2023-03-10 02:24:13,432:WARNING:
+'cuml' is a soft dependency and not included in the pycaret installation. Please run: `pip install cuml` to install.
+2023-03-10 02:24:14,395:WARNING:
+'prophet' is a soft dependency and not included in the pycaret installation. Please run: `pip install prophet` to install.
+2023-03-10 02:24:15,604:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\sklearn\model_selection\_validation.py:372: FitFailedWarning: 
+10 fits failed out of a total of 10.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+10 fits failed with the following error:
+Traceback (most recent call last):
+  File "C:\Users\ariai\anaconda3\lib\site-packages\sklearn\model_selection\_validation.py", line 680, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "C:\Users\ariai\anaconda3\lib\site-packages\xgboost\core.py", line 620, in inner_f
+    return func(**kwargs)
+  File "C:\Users\ariai\anaconda3\lib\site-packages\xgboost\sklearn.py", line 1440, in fit
+    raise ValueError(
+ValueError: Invalid classes inferred from unique values of `y`.  Expected: [0 1], got ['0' '1']
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+
+2023-03-10 02:24:15,620:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\xgboost\sklearn.py:835: UserWarning: `eval_metric` in `fit` method is deprecated for better compatibility with scikit-learn, use `eval_metric` in constructor or`set_params` instead.
+  warnings.warn(
+
+2023-03-10 03:02:21,361:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\xgboost\sklearn.py:835: UserWarning: `eval_metric` in `fit` method is deprecated for better compatibility with scikit-learn, use `eval_metric` in constructor or`set_params` instead.
+  warnings.warn(
+
+2023-03-10 03:06:13,137:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\sklearn\model_selection\_validation.py:372: FitFailedWarning: 
+120 fits failed out of a total of 120.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+120 fits failed with the following error:
+Traceback (most recent call last):
+  File "C:\Users\ariai\anaconda3\lib\site-packages\sklearn\model_selection\_validation.py", line 680, in _fit_and_score
+    # will cache method calls if needed. scorer() returns a dict
+  File "C:\Users\ariai\anaconda3\lib\site-packages\xgboost\core.py", line 620, in inner_f
+    return func(**kwargs)
+  File "C:\Users\ariai\anaconda3\lib\site-packages\xgboost\sklearn.py", line 1440, in fit
+    raise ValueError(
+ValueError: Invalid classes inferred from unique values of `y`.  Expected: [0 1], got ['0' '1']
+
+  cross-validation strategies that can be used here.
+
+2023-03-10 03:06:13,140:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\sklearn\model_selection\_search.py:969: UserWarning: One or more of the test scores are non-finite: [nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan nan
+ nan nan nan nan nan nan]
+  train_scores_dict[scorer_name],
+
+2023-03-10 03:07:08,529:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\sklearn\model_selection\_validation.py:372: FitFailedWarning: 
+60 fits failed out of a total of 60.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+60 fits failed with the following error:
+Traceback (most recent call last):
+  File "C:\Users\ariai\anaconda3\lib\site-packages\sklearn\model_selection\_validation.py", line 680, in _fit_and_score
+    # will cache method calls if needed. scorer() returns a dict
+  File "C:\Users\ariai\anaconda3\lib\site-packages\xgboost\core.py", line 620, in inner_f
+    return func(**kwargs)
+  File "C:\Users\ariai\anaconda3\lib\site-packages\xgboost\sklearn.py", line 1440, in fit
+    raise ValueError(
+ValueError: Invalid classes inferred from unique values of `y`.  Expected: [0 1], got ['0' '1']
+
+  cross-validation strategies that can be used here.
+
+2023-03-10 03:07:08,529:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\sklearn\model_selection\_search.py:969: UserWarning: One or more of the test scores are non-finite: [nan nan nan nan nan nan nan nan nan nan nan nan]
+  train_scores_dict[scorer_name],
+
+2023-03-10 03:17:11,948:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\xgboost\sklearn.py:835: UserWarning: `eval_metric` in `fit` method is deprecated for better compatibility with scikit-learn, use `eval_metric` in constructor or`set_params` instead.
+  warnings.warn(
+
+2023-03-10 03:17:54,191:WARNING:C:\Users\ariai\anaconda3\lib\site-packages\xgboost\sklearn.py:835: UserWarning: `eval_metric` in `fit` method is deprecated for better compatibility with scikit-learn, use `eval_metric` in constructor or`set_params` instead.
+  warnings.warn(
+

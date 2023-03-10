@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 import pandas as pd
 import joblib
 from flask_bootstrap import Bootstrap
-
+from sklearn.preprocessing import LabelEncoder
 
 
 app = Flask(__name__)
@@ -52,29 +52,32 @@ def main():
         df=df.drop(columns=['id','stroke'])
         df=df.append(usr_input)
         # print(df.tail(1)) # user answer is the last row
-        dfdum = pd.get_dummies(df, columns=['gender', 'ever_married','work_type', 'Residence_type', 'smoking_status'])
+        le = LabelEncoder()
+        cat_cols = df[['gender', 'ever_married', 'work_type', 'Residence_type', 'smoking_status']]
+        for col in cat_cols:
+            le.fit(df[col])
+            df[col] = le.transform(df[col])  # encode categories
 
 
-        # print(dfdum.tail(1))
-        print(dfdum.columns)
+        # user input is X
 
+        X = df.tail(1)
 
-
-
-        # Put inputs to dataframe
-        X = dfdum.tail(1)
-        # X = pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]])
+        X['age']=int(X['age'])
+        X['hypertension'] = int(X['hypertension'])
+        X['heart_disease'] = int(X['heart_disease'])
+        X['avg_glucose_level'] = float(X['avg_glucose_level'])
+        X['bmi'] = float(X['bmi'])
 
 
 
         # Get prediction
-        # prediction = clf.predict(X)[0]
-        prediction = clf.predict(X)
+        prediction = clf.predict(X)[0]
+        # prediction = clf.predict(X)
         if prediction == 0:
             prediction = 'Low risk.'
         if prediction == 1:
             prediction = 'High stroke risk !'
-        # prediction =gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status
 
 
 

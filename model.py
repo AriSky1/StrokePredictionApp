@@ -10,9 +10,11 @@ from sklearn.naive_bayes import GaussianNB
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+from imblearn.under_sampling import RandomUnderSampler
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import OrdinalEncoder
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, recall_score, precision_score, confusion_matrix, classification_report
+
 
 
 df = pd.read_csv("data_strokes_prediction.csv")
@@ -36,30 +38,38 @@ for col in cat_cols:
 X,y = df.drop('stroke', axis = 1), df['stroke']
 
 
-# split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
 
 #transform2
-sm = SMOTE(random_state=42)
-X_train_res, y_train_res = sm.fit_resample(X_train, y_train)
-print('Class distribution before resampling:', y_train.value_counts())
-print('Class distribution after resampling:', y_train_res.value_counts())
+# sm = SMOTE(random_state=42)
+# X_train_res, y_train_res = sm.fit_resample(X, y)
+# print('Class distribution before resampling:', y.value_counts())
+# print('Class distribution after resampling:', y_train_res.value_counts())
+rus = RandomUnderSampler(random_state=42)
+X_res, y_res = rus.fit_resample(X, y)
+
+# split
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=42)
 
 
 
 # set model
-clf = xgb.XGBClassifier()
-eval_set = [(X_train_res, y_train_res), (X_test, y_test)]
-le = LabelEncoder()
-y_train_res = le.fit_transform(y_train_res)
+# clf = xgb.XGBClassifier(objective='binary:logistic', learning_rate=0.2, n_estimators=100,
+#                         max_depth=5, min_child_weight=3, max_delta_step=1, subsample=0.8)
+clf = xgb.XGBClassifier(n_estimators=100, learning_rate=1.0,max_depth=1, random_state=0)
+eval_set = [(X_res, y_res), (X_test, y_test)]
+y_train_res = LabelEncoder().fit_transform(y_res)
 y_test = le.fit_transform(y_test)
-clf.fit(X_train_res, y_train_res, eval_metric=["error", "logloss"], eval_set=eval_set, verbose=False)
+clf.fit(X_res, y_train_res, eval_metric=["error", "logloss"], eval_set=eval_set, verbose=False)
 
 
 #evaluation
 y_pred = clf.predict(X_test)
-predictions = [round(value) for value in y_pred]
-accuracy = accuracy_score(y_test, predictions)
-print("Accuracy: %.2f%%" % (accuracy * 100.0))
+
+print(classification_report(y_test, y_pred))
+
+print(confusion_matrix(y_test, y_pred))
 
 joblib.dump(clf, "clf.pkl")
