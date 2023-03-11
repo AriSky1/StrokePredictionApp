@@ -10,8 +10,7 @@ from pycaret.classification import *
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-
-genders = ['Female', 'Male', 'Other']
+genders = ['Female', 'Male']
 hypertensions = ['1', '0']
 heart_diseases = ['1', '0']
 ever_marrieds = ['Yes', 'No']
@@ -25,13 +24,8 @@ def main():
     # If a form is submitted
     if request.method == "POST":
 
-        # Load model
+    # Get user input
 
-
-
-
-        # Get values through input bars
-        # id,gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status,stroke
 
         gender = request.form.get('gender')
         age = request.form.get("age")
@@ -45,62 +39,66 @@ def main():
         smoking_status = request.form.get('smoking_status')
 
 
+    # Encode user_input the same way as the training data was encoded before the training
 
-        # Encode
-
-
+        #create dataframe with user inputs
         usr_input =pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]],
                                 columns=['gender','age','hypertension','heart_disease','ever_married','work_type','Residence_type','avg_glucose_level','bmi','smoking_status'])
+        #load training data
         df = pd.read_csv(r'data_strokes_prediction.csv')
+        #drop prediction column in order to be able to append usr_input row to training data
         df=df.drop(columns=['id','stroke'])
+        # append in order to be able to encode all the dataset with the usr_input as the last row
+        # and ensure encoding is the same
         df=df.append(usr_input)
-        # print(df.tail(1)) # user answer is the last row
+        #encode all the dataset into categories
         le = LabelEncoder()
         cat_cols = df[['gender', 'ever_married', 'work_type', 'Residence_type', 'smoking_status']]
         for col in cat_cols:
             le.fit(df[col])
-            df[col] = le.transform(df[col])  # encode categories
+            df[col] = le.transform(df[col])
 
-        # X is user input, type : dataframe
+    # Isolate encoded user input
+
+        # X are user inputs to predict, format: dataframe
         X = df.iloc[-1:]
 
 
+    # Use trained model to predict 0 or 1 on the user input
 
-        # Get prediction
-
-
-        #pycaret best model
         clf=load_model('best_pipeline')
         prediction = predict_model(clf, data=X)
-        print(prediction)
-        print(prediction.columns)
-        print(prediction.prediction_label[0])
-        print(prediction.prediction_score[0])
-        # prediction = prediction['prediction_label'][0]
-        # # prediction_score = prediction['prediction_score']
-        # prediction = int(prediction)
-        # # print(prediction_score)
         prediction_label = prediction.prediction_label[0]
         prediction_score = prediction.prediction_score[0] *100
 
 
 
+    # Set the prediction message to the user
+
+
 
         if prediction_label == 0:
             prediction = ' On {:.0f} % sure there is low risk.'.format(prediction_score)
-            flash(prediction)
-        if prediction_label == 1:
+        if prediction_label == 1 :
             prediction = 'On {:.0f} % sure there is high stroke risk !'.format(prediction_score)
-            flash(prediction)
+        else:
+            prediction = 'Enter data'
+    # else:
+    return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
+                       ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
+                       smoking_statuses=smoking_statuses,output=prediction)
 
 
 
-    else:
+    if request.method == "GET":
+
         prediction = ""
 
+
     return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
-                           ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
-                           smoking_statuses=smoking_statuses,output=prediction)
+                       ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
+                       smoking_statuses=smoking_statuses,output=prediction)
+
 
 
 
