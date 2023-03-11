@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash
 import pandas as pd
 import numpy as np
 import joblib
@@ -8,6 +8,7 @@ from pycaret.classification import *
 
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 genders = ['Female', 'Male', 'Other']
@@ -71,18 +72,26 @@ def main():
         #pycaret best model
         clf=load_model('best_pipeline')
         prediction = predict_model(clf, data=X)
-        prediction = prediction['prediction_label'][0]
-        # prediction_score = prediction['prediction_score'][0]
-        prediction = int(prediction)
-        # print(prediction_score)
+        print(prediction)
+        print(prediction.columns)
+        print(prediction.prediction_label[0])
+        print(prediction.prediction_score[0])
+        # prediction = prediction['prediction_label'][0]
+        # # prediction_score = prediction['prediction_score']
+        # prediction = int(prediction)
+        # # print(prediction_score)
+        prediction_label = prediction.prediction_label[0]
+        prediction_score = prediction.prediction_score[0] *100
 
 
 
 
-        if prediction == 0:
-            prediction = 'Low risk.'
-        if prediction == 1:
-            prediction = 'High stroke risk !'
+        if prediction_label == 0:
+            prediction = ' On {:.0f} % sure there is low risk.'.format(prediction_score)
+            flash(prediction)
+        if prediction_label == 1:
+            prediction = 'On {:.0f} % sure there is high stroke risk !'.format(prediction_score)
+            flash(prediction)
 
 
 
