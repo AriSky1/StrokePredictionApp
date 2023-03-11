@@ -1,13 +1,14 @@
 from flask import Flask, request, render_template
 import pandas as pd
+import numpy as np
 import joblib
 from sklearn.preprocessing import LabelEncoder
+import pycaret
+from pycaret.classification import *
 
 
 app = Flask(__name__)
-from flask_pretty import Prettify
-prettify = Prettify()
-prettify.init_app(app)
+
 
 genders = ['Female', 'Male', 'Other']
 hypertensions = ['1', '0']
@@ -24,7 +25,9 @@ def main():
     if request.method == "POST":
 
         # Load model
-        clf = joblib.load("clf.pkl")
+
+
+
 
         # Get values through input bars
         # id,gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status,stroke
@@ -57,24 +60,25 @@ def main():
             le.fit(df[col])
             df[col] = le.transform(df[col])  # encode categories
 
-        print(df,df.tail())
-
-
-        # user input is X
-
-        X = df.tail(1)
-
-        X['age']=int(X['age'])
-        X['hypertension'] = int(X['hypertension'])
-        X['heart_disease'] = int(X['heart_disease'])
-        X['avg_glucose_level'] = float(X['avg_glucose_level'])
-        X['bmi'] = float(X['bmi'])
+        # X is user input, type : dataframe
+        X = df.iloc[-1:]
 
 
 
         # Get prediction
-        prediction = clf.predict(X)[0]
-        # prediction = clf.predict(X)
+
+
+        #pycaret best model
+        clf=load_model('best_pipeline')
+        prediction = predict_model(clf, data=X)
+        prediction = prediction['prediction_label'][0]
+        # prediction_score = prediction['prediction_score'][0]
+        prediction = int(prediction)
+        # print(prediction_score)
+
+
+
+
         if prediction == 0:
             prediction = 'Low risk.'
         if prediction == 1:

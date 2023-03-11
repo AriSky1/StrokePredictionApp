@@ -12,10 +12,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.over_sampling import RandomOverSampler
-
-
 from sklearn.metrics import accuracy_score, recall_score, precision_score, confusion_matrix, classification_report
-
+from pycaret.classification import *
 
 
 df = pd.read_csv("data_strokes_prediction.csv")
@@ -41,33 +39,53 @@ for col in cat_cols:
 X,y = df.drop('stroke', axis = 1), df['stroke']
 
 
-
-# undersample
-rus = RandomUnderSampler(random_state=42) #sample coan be biased so test many times without random state
-# rus = RandomUnderSampler()
-X_res, y_res = rus.fit_resample(X, y)
-
-#oversample #OVERFITTING
-# rus = RandomOverSampler() #sample coan be biased so test many times without random state
+#
+# # undersample
+# rus = RandomUnderSampler(random_state=42) #sample coan be biased so test many times without random state
 # # rus = RandomUnderSampler()
 # X_res, y_res = rus.fit_resample(X, y)
+#
+# #oversample #OVERFITTING
+# # rus = RandomOverSampler() #sample coan be biased so test many times without random state
+# # # rus = RandomUnderSampler()
+# # X_res, y_res = rus.fit_resample(X, y)
+#
+#
+# #split
+# X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=42)
+#
+#
+# #model
+# clf = RandomForestClassifier(random_state=0)
+#
+# #fit
+# clf.fit(X_train, y_train)
+#
+# #evaluation
+# y_pred = clf.predict(X_test)
+#
+# print(classification_report(y_test, y_pred))
+#
+# print(confusion_matrix(y_test, y_pred))
+#
+# joblib.dump(clf, "clf.pkl")
 
 
 #split
-X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# augment
+sm = SMOTE(random_state=42)
+X_train_res, y_train_res = sm.fit_resample(X_train, y_train)
+#setup
+train_data = pd.concat([X_train_res, y_train_res], axis=1)
+s = setup(data=train_data, target='stroke', session_id=123, normalize=True)
+# take best model
+best = compare_models()
+# check metrics
+# xg = create_model('xgboost')
+# plot_model(xg)
+# plot_model(xg, plot = 'error')
+#save to pkl
+save_model(best, 'best_pipeline')
 
 
-#model
-clf = RandomForestClassifier(random_state=0)
-
-#fit
-clf.fit(X_train, y_train)
-
-#evaluation
-y_pred = clf.predict(X_test)
-
-print(classification_report(y_test, y_pred))
-
-print(confusion_matrix(y_test, y_pred))
-
-joblib.dump(clf, "clf.pkl")
