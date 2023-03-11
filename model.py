@@ -34,7 +34,10 @@ s = setup(data=train_data, target='stroke', session_id=123, normalize=True)
 best = compare_models()
 
 # check metrics
-# xg = create_model('xgboost')
+
+xg = create_model('xgboost')
+tuned_xg = tune_model(xg)
+best=tuned_xg
 # plot_model(xg)
 # plot_model(xg, plot = 'error')
 

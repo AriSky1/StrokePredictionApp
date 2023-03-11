@@ -81,23 +81,18 @@ def main():
             prediction = ' On {:.0f} % sure there is low risk.'.format(prediction_score)
         if prediction_label == 1 :
             prediction = 'On {:.0f} % sure there is high stroke risk !'.format(prediction_score)
-        else:
-            prediction = 'Enter data'
-    # else:
-    return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
-                       ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
-                       smoking_statuses=smoking_statuses,output=prediction)
-
-
-
-    if request.method == "GET":
-
-        prediction = ""
-
+        # else:
+        #     prediction = 'Enter data'
+    else:
+        prediction = ''
 
     return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
                        ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
                        smoking_statuses=smoking_statuses,output=prediction)
+
+
+
+
 
 
 
@@ -107,4 +102,3 @@ def main():
 # Running the app
 if __name__ == '__main__':
     app.run(debug = True)
-
