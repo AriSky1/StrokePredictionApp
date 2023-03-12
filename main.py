@@ -10,7 +10,7 @@ from pycaret.classification import *
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-genders = ['Female', 'Male']
+genders = ['Female', 'Male', 'Other']
 hypertensions = ['1', '0']
 heart_diseases = ['1', '0']
 ever_marrieds = ['Yes', 'No']
@@ -51,7 +51,7 @@ def main():
         # append in order to be able to encode all the dataset with the usr_input as the last row
         # and ensure encoding is the same
         df=df.append(usr_input)
-        #encode all the dataset into categories
+        #encozsde all the dataset into categories
         le = LabelEncoder()
         cat_cols = df[['gender', 'ever_married', 'work_type', 'Residence_type', 'smoking_status']]
         for col in cat_cols:
@@ -84,7 +84,7 @@ def main():
         # else:
         #     prediction = 'Enter data'
     else:
-        prediction = ''
+        prediction = 's'
 
     return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
                        ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
