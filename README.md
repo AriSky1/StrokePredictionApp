@@ -6,7 +6,7 @@ This app uses XGBoost optimized algorithm and a public dataset from the World He
 
 
 
-An efficient technique of over + undersampling applied to the whole dataset allowed to around 92% of accuracy, precision, recall, f-1 score.
+An efficient technique of over + undersampling applied to the whole dataset allowed to get around 92% of accuracy, precision, recall, f-1 score.
 It is used in cases of very unbalanced data. First, negative stroke cases were reduced, then positive stroke cases were added. 
 Using just oversampling didn't give good results with any model.
 
