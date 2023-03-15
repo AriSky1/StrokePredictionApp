@@ -1,6 +1,7 @@
 # StrokePredictionApp
 
 
+<<<<<<< HEAD
 
 This app uses XGBoost optimized algorithm and a public dataset from the World Health Organization.
 
@@ -17,3 +18,5 @@ EDA part ommited in the notebooks for this project - the purpose was to learn ho
 
 
 https://user-images.githubusercontent.com/105871709/225187226-1268e4a4-ba4f-43bf-8c54-4f548718d3be.mp4
+=======
+>>>>>>> 17d46c443f503e02946fbf9dd39ca3285cb42a2c
