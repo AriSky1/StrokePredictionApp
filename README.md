@@ -1,7 +1,7 @@
 # StrokePredictionApp
 
 
-<<<<<<< HEAD
+
 
 This app uses XGBoost optimized algorithm and a public dataset from the World Health Organization.
 
@@ -17,6 +17,7 @@ The selected model is XGBClassifier from sklearn library.
 EDA part ommited in the notebooks for this project - the purpose was to learn how to build an app on flask and train, integrate a Machine Learning classification algorithm.
 
 
-https://user-images.githubusercontent.com/105871709/225187226-1268e4a4-ba4f-43bf-8c54-4f548718d3be.mp4
-=======
->>>>>>> 17d46c443f503e02946fbf9dd39ca3285cb42a2c
+
+
+https://user-images.githubusercontent.com/105871709/225194366-21e4e0ba-f538-4ecd-930b-3b85320c98cc.mp4
+
