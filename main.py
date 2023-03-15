@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, flash
 import pandas as pd
+import pickle as pkl
 import numpy as np
 import joblib
 from sklearn.preprocessing import LabelEncoder
@@ -10,13 +11,19 @@ from pycaret.classification import *
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-genders = ['Female', 'Male', 'Other']
+
+
+
+genders = ['Female', 'Male']
 hypertensions = ['1', '0']
 heart_diseases = ['1', '0']
 ever_marrieds = ['Yes', 'No']
 work_types = ['Private', 'Self-employed', 'Govt_job', 'children', 'Never_worked']
 Residence_types = ['Urban', 'Rural']
 smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
+
+
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -66,10 +73,14 @@ def main():
 
     # Use trained model to predict 0 or 1 on the user input
 
-        clf=load_model('best_pipeline')
-        prediction = predict_model(clf, data=X)
-        prediction_label = prediction.prediction_label[0]
-        prediction_score = prediction.prediction_score[0] *100
+        clf = pkl.load(open('best_pipeline1.pkl', 'rb'))
+
+
+        prediction_label = clf.predict(X)
+        prediction_label = int(prediction_label)
+        print(prediction_label, type(prediction_label))
+        prediction_score = clf.predict_proba(X)
+        print(prediction_score)
 
 
 
@@ -77,14 +88,18 @@ def main():
 
 
 
+        # if prediction_label == 0:
+        #     prediction = ' On {:.0f} % sure there is low risk.'.format(prediction_score)
+        # if prediction_label == 1 :
+        #     prediction = 'On {:.0f} % sure there is high stroke risk !'.format(prediction_score)
+
         if prediction_label == 0:
-            prediction = ' On {:.0f} % sure there is low risk.'.format(prediction_score)
-        if prediction_label == 1 :
-            prediction = 'On {:.0f} % sure there is high stroke risk !'.format(prediction_score)
-        # else:
-        #     prediction = 'Enter data'
-    else:
-        prediction = 's'
+
+            prediction = ' On ' + str(round(prediction_score[0][0] * 100)) + ' % sure there is low risk.'
+        if prediction_label == 1:
+            prediction = ' On '+ str(round(prediction_score[0][1] * 100))+' % sure there is high risk.'
+
+
 
     return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
                        ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
