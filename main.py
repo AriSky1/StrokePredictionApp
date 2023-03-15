@@ -87,12 +87,6 @@ def main():
     # Set the prediction message to the user
 
 
-
-        # if prediction_label == 0:
-        #     prediction = ' On {:.0f} % sure there is low risk.'.format(prediction_score)
-        # if prediction_label == 1 :
-        #     prediction = 'On {:.0f} % sure there is high stroke risk !'.format(prediction_score)
-
         if prediction_label == 0:
 
             prediction = ' On ' + str(round(prediction_score[0][0] * 100)) + ' % sure there is low risk.'

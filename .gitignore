@@ -2,4 +2,4 @@ stroke_env
 *.pyc
 .DS_Store
 *.log*
-*.ipynb*
+#*.ipynb*

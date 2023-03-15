@@ -36,6 +36,8 @@ df = df[(df['gender'] != 'Other')]
 df=df.drop(df[df['id'] == 69768].index)
 df=df.drop(df[df['id'] == 49669].index)
 
+
+
 # fill null values with regression on numerical values
 DT_bmi_pipe = Pipeline( steps=[
                                ('scale',StandardScaler()),
@@ -58,6 +60,9 @@ for col in cat_cols:
        le.fit(df[col])
        df[col] = le.transform(df[col])
 
+
+# # # feature selection
+# df=df[['age', 'avg_glucose_level', 'bmi', 'stroke']]
 # define X as features, y as labels to predict
 X,y = df.drop('stroke', axis = 1), df['stroke']
 
