@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, flash
+from flask import Flask, request, make_response, render_template, flash
 import pandas as pd
 import pickle as pkl
 import numpy as np
@@ -9,6 +9,7 @@ from pycaret.classification import *
 
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
@@ -53,14 +54,14 @@ smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
 
 
 
-
 @app.route('/', methods=['GET', 'POST'])
 @error_exception
 def main():
+
+
+
     # If a form is submitted
     if request.method == "POST":
-
-        prediction_label = None
 
     # Get user input
 
@@ -134,21 +135,23 @@ def main():
                                smoking_statuses=smoking_statuses,output=prediction)
 
         else:
-            prediction = ""
+            prediction = 'Enter data'
             return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
                                ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
                                smoking_statuses=smoking_statuses,output=prediction)
 
-    else:
-        prediction = ""
+
+    if request.method == "GET":
+        # prediction = "Enter data"
+        prediction = "Enter data"
 
 
 
 
 
-    return render_template("website.html")
-
-
+    return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
+                               ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
+                               smoking_statuses=smoking_statuses, prediction=prediction)
 
 
 

@@ -9,14 +9,14 @@
     </head>
 
     <body>
-        <form name="form", method="POST", style="text-align: center;">
+        <form name="form", method="POST", action="/", style="text-align: center;">
 
             <h1>Stroke predictor</h1>
 
 
             <br>
 
-            <p> Gender :  <select name= "gender" method="GET" action="/">
+            <p> Gender :  <select name= "gender" method="POST" action="/">
                 {% for gender in genders %}
                 <option value= "{{gender}}" SELECTED>{{gender}}</option>"
                 {% endfor %}
@@ -28,21 +28,21 @@
 
 
 
-            <p>Hypertension : <select name="hypertension" method="GET" action="/">
+            <p>Hypertension : <select name="hypertension" method="POST" action="/">
                 {% for hypertension in hypertensions %}
                 <option value= "{{hypertension}}" SELECTED>{{hypertension}}</option>"
                 {% endfor %}
             </select></p>
 
 
-            <p> Heart Desease : <select name="heart_disease" method="GET" action="/">
+            <p> Heart Desease : <select name="heart_disease" method="POST" action="/">
                 {% for heart_disease in heart_diseases %}
                 <option value= "{{heart_disease}}" SELECTED>{{heart_disease}}</option>"
                 {% endfor %}
             </select></p>
 
 
-                <p>Ever married : <select name="ever_married" method="GET" action="/">
+                <p>Ever married : <select name="ever_married" method="POST" action="/">
                 {% for ever_married in ever_marrieds %}
                 <option value= "{{ever_married}}" SELECTED>{{ever_married}}</option>"
                 {% endfor %}
@@ -51,7 +51,7 @@
 
 
 
-<p> Work type: <select name="work_type" method="GET" action="/">
+<p> Work type: <select name="work_type" method="POST" action="/">
                 {% for work_type in work_types %}
                 <option value= "{{work_type}}" SELECTED>{{work_type}}</option>"
                 {% endfor %}
@@ -60,7 +60,7 @@
 
 
 
-<p>Residence type : <select name="Residence_type" method="GET" action="/">
+<p>Residence type : <select name="Residence_type" method="POST" action="/">
                 {% for Residence_type in Residence_types %}
                 <option value= "{{Residence_type}}" SELECTED>{{Residence_type}}</option>"
                 {% endfor %}
@@ -74,7 +74,7 @@
            </p>
 
 
-<p>Smoking status : <select name="smoking_status" method="GET" action="/">
+<p>Smoking status : <select name="smoking_status" method="POST" action="/">
                 {% for smoking_status in smoking_statuses %}
                 <option value= "{{smoking_status}}" SELECTED>{{smoking_status}}</option>"
                 {% endfor %}
