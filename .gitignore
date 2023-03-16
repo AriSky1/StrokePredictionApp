@@ -3,3 +3,4 @@ stroke_env
 .DS_Store
 *.log*
 #*.ipynb*
+*.mpeg*
