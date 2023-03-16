@@ -14,6 +14,34 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 
+
+
+def error_exception(func):
+    def wrapper(*args):
+        try:
+            return func(*args)
+        except ValueError:
+            return "Try again. Enter your contacts name"
+        except KeyError:
+            return "Try again. Enter correct name"
+        except IndexError:
+            return "Try again. Enter correct name and phone number"
+        except TypeError:
+            return "I don't have enough parameters to execute the command. Please try again"
+    return wrapper
+
+
+
+
+
+
+
+
+
+
+
+
+
 genders = ['Female', 'Male']
 hypertensions = ['1', '0']
 heart_diseases = ['1', '0']
@@ -27,6 +55,7 @@ smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
 
 
 @app.route('/', methods=['GET', 'POST'])
+@error_exception
 def main():
     # If a form is submitted
     if request.method == "POST":
@@ -48,11 +77,15 @@ def main():
         smoking_status = request.form.get('smoking_status')
 
 
-    # Encode user_input the same way as the training data was encoded before the training
-
         #create dataframe with user inputs
         usr_input =pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]],
                                 columns=['gender','age','hypertension','heart_disease','ever_married','work_type','Residence_type','avg_glucose_level','bmi','smoking_status'])
+
+
+
+
+    # Encode user_input the same way as the training data was encoded before the training
+
         #load training data
         df = pd.read_csv(r'data_strokes_prediction.csv')
         #drop prediction column in order to be able to append usr_input row to training data
@@ -106,13 +139,14 @@ def main():
                                ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
                                smoking_statuses=smoking_statuses,output=prediction)
 
+    else:
+        prediction = ""
 
 
 
 
-    return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
-                       ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
-                       smoking_statuses=smoking_statuses)
+
+    return render_template("website.html")
 
 
 
