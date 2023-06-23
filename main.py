@@ -9,35 +9,24 @@ from pycaret.classification import *
 
 
 app = Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 
+#
+# def error_exception(func):
+#     def wrapper(*args):
+#         try:
+#             return func(*args)
+#         except ValueError:
+#             return "Wrong input type. Only numerals allowed"
+#     return wrapper
 
 
-
-def error_exception(func):
-    def wrapper(*args):
-        try:
-            return func(*args)
-        except ValueError:
-            return "Try again. Enter your contacts name"
-        except KeyError:
-            return "Try again. Enter correct name"
-        except IndexError:
-            return "Try again. Enter correct name and phone number"
-        except TypeError:
-            return "I don't have enough parameters to execute the command. Please try again"
-    return wrapper
-
-
-
-
-
-
-
-
+@app.errorhandler(ValueError)
+def value_error(e):
+    return "A value error occurred!"
 
 
 
@@ -52,10 +41,8 @@ Residence_types = ['Urban', 'Rural']
 smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
 
 
-
-
 @app.route('/', methods=['GET', 'POST'])
-@error_exception
+# @error_exception
 def main():
 
 
@@ -123,13 +110,15 @@ def main():
 
 
         if prediction_label == 0:
-            prediction = ' On ' + str(round(prediction_score[0][0] * 100)) + ' % sure there is low risk.'
+            # prediction = ' On ' + str(round(prediction_score[0][0] * 100)) + ' % sure there is low risk.'
+            prediction = ' On ' + str(prediction_score[0][0] * 100) + ' % sure there is low risk.'
             return render_template("website.html", genders=genders, hypertensions=hypertensions,
                                    heart_diseases=heart_diseases,
                                    ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
                                    smoking_statuses=smoking_statuses, output=prediction)
         if prediction_label == 1:
-            prediction = ' On '+ str(round(prediction_score[0][1] * 100))+' % sure there is high risk.'
+            # prediction = ' On '+ str(round(prediction_score[0][1] * 100))+' % sure there is high risk.'
+            prediction = ' On ' + str(prediction_score[0][1] * 100) + ' % sure there is high risk.'
             return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
                                ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
                                smoking_statuses=smoking_statuses,output=prediction)
