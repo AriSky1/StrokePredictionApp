@@ -4,19 +4,29 @@
 
     <head>
         <title>Strokes Prediction App</title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&display=swap" rel="stylesheet">
 
     </head>
 
     <body>
         <form name="form", method="POST", action="/", style="text-align: center;">
 
-            <h1>Stroke predictor</h1>
+            <h1>Stroke risk estimator</h1>
 
 
             <br>
 
-            <p> Gender :  <select name= "gender" method="POST" action="/">
+         <div style="display: flex;align-items: center;justify-content: center; ">
+
+
+
+
+
+
+
+              <p>  Gender  <select name= "gender" method="POST" action="/">
                 {% for gender in genders %}
                 <option value= "{{gender}}" SELECTED>{{gender}}</option>"
                 {% endfor %}
@@ -24,25 +34,40 @@
             </p>
 
 
-            <p>Age :  <input type="number" name="age", placeholder="Enter value" required/></p>
 
 
 
-            <p>Hypertension : <select name="hypertension" method="POST" action="/">
+
+            <p> Age <input type="number" name="age", placeholder="Enter value" required/></p>
+
+
+
+            <p> Hypertension <select name="hypertension" method="POST" action="/">
                 {% for hypertension in hypertensions %}
                 <option value= "{{hypertension}}" SELECTED>{{hypertension}}</option>"
                 {% endfor %}
             </select></p>
 
 
-            <p> Heart Desease : <select name="heart_disease" method="POST" action="/">
+                            <p> Heart Desease <select name="heart_disease" method="POST" action="/">
                 {% for heart_disease in heart_diseases %}
                 <option value= "{{heart_disease}}" SELECTED>{{heart_disease}}</option>"
                 {% endfor %}
             </select></p>
 
+            <p>BMI  <input type="float" name="bmi", placeholder="Enter value" required/>
+                       </p>
 
-                <p>Ever married : <select name="ever_married" method="POST" action="/">
+
+         </div>
+
+
+            <div style="display: flex; align-items: center;justify-content: center;">
+
+
+
+
+                <p>Ever married <select name="ever_married" method="POST" action="/">
                 {% for ever_married in ever_marrieds %}
                 <option value= "{{ever_married}}" SELECTED>{{ever_married}}</option>"
                 {% endfor %}
@@ -50,35 +75,37 @@
 
 
 
-
-<p> Work type: <select name="work_type" method="POST" action="/">
+                <p> Work type<select name="work_type" method="POST" action="/">
                 {% for work_type in work_types %}
                 <option value= "{{work_type}}" SELECTED>{{work_type}}</option>"
                 {% endfor %}
             </select></p>
 
-
-
-
-<p>Residence type : <select name="Residence_type" method="POST" action="/">
+<p>Residence type <select name="Residence_type" method="POST" action="/">
                 {% for Residence_type in Residence_types %}
                 <option value= "{{Residence_type}}" SELECTED>{{Residence_type}}</option>"
                 {% endfor %}
             </select></p>
 
 
-<p> Average glucose level : <input type="float" name="avg_glucose_level", placeholder="Enter value" required/>
+<p> Average glucose level <input type="float" name="avg_glucose_level", placeholder="Enter value" required/>
           </p>
 
-<p>BMI : <input type="float" name="bmi", placeholder="Enter value" required/>
-           </p>
-
-
-<p>Smoking status : <select name="smoking_status" method="POST" action="/">
+                <p>Smoking status <select name="smoking_status" method="POST" action="/">
                 {% for smoking_status in smoking_statuses %}
                 <option value= "{{smoking_status}}" SELECTED>{{smoking_status}}</option>"
                 {% endfor %}
             </select></p>
+
+            </div>
+
+
+
+
+
+
+
+
 
 
 

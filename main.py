@@ -111,14 +111,14 @@ def main():
 
         if prediction_label == 0:
             # prediction = ' On ' + str(round(prediction_score[0][0] * 100)) + ' % sure there is low risk.'
-            prediction = ' On ' + str(prediction_score[0][0] * 100) + ' % sure there is low risk.'
+            prediction = ' On ' + str(prediction_score[0][0] * 100)[0:5] + ' % sure there is low risk.'
             return render_template("website.html", genders=genders, hypertensions=hypertensions,
                                    heart_diseases=heart_diseases,
                                    ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
                                    smoking_statuses=smoking_statuses, output=prediction)
         if prediction_label == 1:
             # prediction = ' On '+ str(round(prediction_score[0][1] * 100))+' % sure there is high risk.'
-            prediction = ' On ' + str(prediction_score[0][1] * 100) + ' % sure there is high risk.'
+            prediction = ' On ' + str(prediction_score[0][1] * 100)[0:5] + ' % sure there is high risk.'
             return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
                                ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
                                smoking_statuses=smoking_statuses,output=prediction)
