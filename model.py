@@ -84,14 +84,18 @@ X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2,
 
 # train
 model,name = XGBClassifier(),'XGBC'
-XGB_BEST_PARAMS = {'colsample_bytree': 0.6966652866539669,
-                   'gamma': 5.1222111958093395,
+# XGB_BEST_PARAMS = {'colsample_bytree': 0.6966652866539669,
+#                    'gamma': 5.1222111958093395,
+#                    'learning_rate': 0.28,
+#                    'max_depth': 16.0,
+#                    'min_child_weight': 1.0,
+#                    'nthread': 3.0, 'reg_alpha': 61.0,
+#                    'reg_lambda': 0.5855571439718152,
+#                    'scale_pos_weight': 4.0, 'subsample': 0.9}
+XGB_BEST_PARAMS = {
                    'learning_rate': 0.28,
-                   'max_depth': 16.0,
-                   'min_child_weight': 1.0,
-                   'nthread': 3.0, 'reg_alpha': 61.0,
-                   'reg_lambda': 0.5855571439718152,
-                   'scale_pos_weight': 4.0, 'subsample': 0.9}
+}
+
 pipeline = Pipeline(steps = [('scale',StandardScaler()), ("XGBC",XGBClassifier(random_state=random_state, params=XGB_BEST_PARAMS))])
 pipeline.fit(X_train,y_train)
 
@@ -99,6 +103,7 @@ pipeline.fit(X_train,y_train)
 tuned_pred = pipeline.predict(X_test)
 print(classification_report(y_test,tuned_pred))
 print('Accuracy Score: ',accuracy_score(y_test,tuned_pred))
+print('Recall Score: ',recall_score(y_test,tuned_pred))
 print('\nConfusion matrix: \n',confusion_matrix(y_test, tuned_pred))
 print('\n Model :',name)
 
