@@ -18,11 +18,12 @@
 
             <br>
 
-         <div style="display: flex;align-items: center;justify-content: center; ">
+<!--         <div style="display: flex;align-items: center;justify-content: center; ">-->
 
 
 
-
+<div style="display: flex; justify-content: center; align-items: center; ">
+<div id='stack' style="max-width: 1200px; display: flex; align-items:center; flex-wrap: wrap; justify-content: left;  ">
 
 
 
@@ -59,10 +60,10 @@
                        </p>
 
 
-         </div>
+<!--         </div>-->
 
 
-            <div style="display: flex; align-items: center;justify-content: center;">
+<!--            <div style="display: flex; align-items: center;justify-content: center;">-->
 
 
 
@@ -81,15 +82,15 @@
                 {% endfor %}
             </select></p>
 
-<p>Residence type <select name="Residence_type" method="POST" action="/">
+                <p>Residence type <select name="Residence_type" method="POST" action="/">
                 {% for Residence_type in Residence_types %}
                 <option value= "{{Residence_type}}" SELECTED>{{Residence_type}}</option>"
                 {% endfor %}
             </select></p>
 
 
-<p> Average glucose level <input type="float" name="avg_glucose_level", placeholder="Enter value" required/>
-          </p>
+                <p> Average glucose level <input type="float" name="avg_glucose_level", placeholder="Enter value" required/>
+              </p>
 
                 <p>Smoking status <select name="smoking_status" method="POST" action="/">
                 {% for smoking_status in smoking_statuses %}
@@ -97,13 +98,13 @@
                 {% endfor %}
             </select></p>
 
+<!--            </div>-->
+
+
             </div>
 
 
-
-
-
-
+</div>
 
 
 

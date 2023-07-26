@@ -1,11 +1,7 @@
 from flask import Flask, request, make_response, render_template, flash
 import pandas as pd
 import pickle as pkl
-import numpy as np
-import joblib
 from sklearn.preprocessing import LabelEncoder
-import pycaret
-from pycaret.classification import *
 
 
 app = Flask(__name__)
@@ -14,21 +10,9 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 
-#
-# def error_exception(func):
-#     def wrapper(*args):
-#         try:
-#             return func(*args)
-#         except ValueError:
-#             return "Wrong input type. Only numerals allowed"
-#     return wrapper
-
-
 @app.errorhandler(ValueError)
 def value_error(e):
     return "A value error occurred!"
-
-
 
 
 
@@ -42,16 +26,11 @@ smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
 
 
 @app.route('/', methods=['GET', 'POST'])
-# @error_exception
+
 def main():
 
 
-
-    # If a form is submitted
     if request.method == "POST":
-
-    # Get user input
-
 
         gender = request.form.get('gender')
         age = request.form.get("age")
@@ -65,36 +44,21 @@ def main():
         smoking_status = request.form.get('smoking_status')
 
 
-        #create dataframe with user inputs
         usr_input =pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]],
                                 columns=['gender','age','hypertension','heart_disease','ever_married','work_type','Residence_type','avg_glucose_level','bmi','smoking_status'])
 
 
 
-
-    # Encode user_input the same way as the training data was encoded before the training
-
-        #load training data
         df = pd.read_csv(r'data_strokes_prediction.csv')
-        #drop prediction column in order to be able to append usr_input row to training data
         df=df.drop(columns=['id','stroke'])
-        # append in order to be able to encode all the dataset with the usr_input as the last row
-        # and ensure encoding is the same
         df=df.append(usr_input)
-        #encozsde all the dataset into categories
         le = LabelEncoder()
         cat_cols = df[['gender', 'ever_married', 'work_type', 'Residence_type', 'smoking_status']]
         for col in cat_cols:
             le.fit(df[col])
             df[col] = le.transform(df[col])
+            X = df.iloc[-1:]# X are user inputs to predict, format: dataframe
 
-    # Isolate encoded user input
-
-        # X are user inputs to predict, format: dataframe
-        X = df.iloc[-1:]
-
-
-    # Use trained model to predict 0 or 1 on the user input
 
         clf = pkl.load(open('best_pipeline1.pkl', 'rb'))
 
@@ -103,11 +67,6 @@ def main():
         print(prediction_label, type(prediction_label))
         prediction_score = clf.predict_proba(X)
         print(prediction_score)
-
-
-
-    # Set the prediction message to the user
-
 
         if prediction_label == 0:
             # prediction = ' On ' + str(round(prediction_score[0][0] * 100)) + ' % sure there is low risk.'
@@ -133,7 +92,6 @@ def main():
     if request.method == "GET":
         # prediction = "Enter data"
         prediction = "Enter data"
-
 
 
 

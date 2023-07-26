@@ -46,6 +46,7 @@ select {
   text-color: white;
   color: grey;
     font-size: 1.2em;
+
 }
 
 input {
@@ -61,6 +62,7 @@ input {
   height: 95px;
   text-align: center;
     font-size: 1.2em;
+
 }
 
 button {
