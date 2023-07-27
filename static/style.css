@@ -10,10 +10,10 @@ h1 {
 
 h3 {
   font-size: 2em;
-  margin-top: 60px;
+  margin-top: 30px;
   text-align: center;
   letter-spacing: 1px;
-  color: #ff9980;
+
   font-family: Montserrat Alternates;
 }
 
@@ -67,20 +67,28 @@ input {
 
 button {
   box-sizing: border-box;
-  border-radius: 1rem;
+  border-radius: 0rem;
+  border: None;
   background-color: #131324;
-
-
   font-family: Montserrat Alternates;
   gap: 2rem;
   width: 200px;
   height: 80px;
   text-align: center;
-  font-size: 2em;
+  font-size: 2.5em;
   color: #1cc78b;
-  border-color:#1cc78b;
+  border-color:#131324;
+  padding-left:200px;
+    background: transparent;
+
 
 }
+
+btn {
+        padding-left: 50px;
+
+}
+
 
 html, body {
     height:100%;

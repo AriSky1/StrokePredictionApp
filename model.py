@@ -40,25 +40,21 @@ X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2,
 # parameters = {
 #     'max_depth': range(2, 10, 1),
 #     'n_estimators': range(60, 220, 40),
-#     'learning_rate': [0.1, 0.01, 0.05]
-# }
+#     'learning_rate': [0.1, 0.01, 0.05] }
 # grid_search = GridSearchCV(estimator=estimator, param_grid=parameters, scoring='roc_auc', n_jobs=10, cv=10, verbose=True)
 # grid_search.fit(X_train, y_train)
-#
 # # Get the best hyperparameters from GridSearch
 # best_params = grid_search.best_params_
 # print("Best Hyperparameters:", best_params)
 
-XGB_BEST_PARAMS = {
-'learning_rate': 0.1, 'max_depth': 9, 'n_estimators': 180
-}
 
 
+XGB_BEST_PARAMS = {'learning_rate': 0.1, 'max_depth': 9, 'n_estimators': 180}
 
-xg = XGBClassifier(n_estimators=180, learning_rate=0.1, max_depth=9,random_state=42)
+xg = XGBClassifier(params=XGB_BEST_PARAMS, random_state=42)
 
 
-# Fit the model to the training data
+# Fit the training data to the model
 xg = xg.fit(X_train, y_train)
 
 # Get cv scores

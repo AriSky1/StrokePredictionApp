@@ -1,30 +1,10 @@
 import pandas as pd
 import numpy as np
-import pickle as pkl
 from imblearn.over_sampling import SMOTE
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from pycaret.classification import *
 from sklearn.pipeline import Pipeline
 from sklearn.tree import DecisionTreeRegressor
 from imblearn.under_sampling import RandomUnderSampler
-from xgboost import XGBClassifier
-from sklearn.metrics import classification_report, confusion_matrix
-from sklearn.metrics import (accuracy_score,
-                             auc,
-                             precision_score,
-                             recall_score,
-                             f1_score,
-                             roc_auc_score,
-                             confusion_matrix)
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import cross_val_score
-import matplotlib.pyplot as plt
-import seaborn as sns
-from mlxtend.classifier import StackingCVClassifier
-from sklearn.svm import SVC
-
-
 
 
 random_state = 42
@@ -32,7 +12,9 @@ random_state = 42
 
 def transformation_pipeline(df):
 
+    # drop useless
     df = df[(df['gender'] != 'Other')]
+    df = df.drop(['id'], axis=1)
 
     # fill null values with regression on numerical values
     DT_bmi_pipe = Pipeline( steps=[
@@ -50,16 +32,13 @@ def transformation_pipeline(df):
 
     # transform : encode types object into categories
     le = LabelEncoder()
-    df = df.drop(['id'], axis=1)  # drop useless column
     cat_cols = df.select_dtypes(include=['object']).columns.tolist()
     for col in cat_cols:
            le.fit(df[col])
            df[col] = le.transform(df[col])
 
-
-
+    # create X,y
     X,y = df.drop('stroke', axis = 1), df['stroke']
-
 
     # undersampling + oversampling
     over = SMOTE(sampling_strategy = 1)

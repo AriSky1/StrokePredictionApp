@@ -18,13 +18,9 @@
 
             <br>
 
-<!--         <div style="display: flex;align-items: center;justify-content: center; ">-->
-
-
 
 <div style="display: flex; justify-content: center; align-items: center; ">
 <div id='stack' style="max-width: 1200px; display: flex; align-items:center; flex-wrap: wrap; justify-content: left;  ">
-
 
 
               <p>  Gender  <select name= "gender" method="POST" action="/">
@@ -34,14 +30,7 @@
             </select>
             </p>
 
-
-
-
-
-
             <p> Age <input type="number" name="age", placeholder="Enter value" required/></p>
-
-
 
             <p> Hypertension <select name="hypertension" method="POST" action="/">
                 {% for hypertension in hypertensions %}
@@ -58,13 +47,6 @@
 
 
                        </p>
-
-
-<!--         </div>-->
-
-
-<!--            <div style="display: flex; align-items: center;justify-content: center;">-->
-
 
 
 
@@ -100,7 +82,9 @@
                 {% endfor %}
             </select></p>
 
-<!--            </div>-->
+            <div id="btn" ><button type="submit" value="Submit" name="submit_btn">Verify</button></div>
+
+
 
 
             </div>
@@ -110,20 +94,10 @@
 
 
 
-
-
-
-
-            <br><br>
-
-            <button type="submit" value="Submit" name="submit_btn">Verify</button>
-
-
-
         </form>
 
 
-    <h3 id='hideMe'>{{ output }}</h3>
+    <h3 id='hideMe' style= 'color:{{ color }};'>{{ output }} </h3>
     </body>
 </html>
 
