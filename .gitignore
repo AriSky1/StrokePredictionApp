@@ -4,3 +4,4 @@ stroke_env
 *.log*
 #*.ipynb*
 *.mpeg*
+*.ipynb

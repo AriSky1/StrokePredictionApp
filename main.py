@@ -5,8 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 
 
 app = Flask(__name__)
-#
-# app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 
 
 
@@ -17,10 +16,10 @@ def value_error(e):
 
 
 genders = ['Female', 'Male']
-hypertensions = ['1', '0']
-heart_diseases = ['1', '0']
+hypertensions = ['Yes', 'No']
+heart_diseases = ['Yes', 'No']
 ever_marrieds = ['Yes', 'No']
-work_types = ['Private', 'Self-employed', 'Govt_job', 'children', 'Never_worked']
+work_types = ['Private', 'Self-employed', 'Government job', 'Children', 'Never worked']
 Residence_types = ['Urban', 'Rural']
 smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
 
@@ -53,14 +52,16 @@ def main():
         df=df.drop(columns=['id','stroke'])
         df=df.append(usr_input)
         le = LabelEncoder()
-        cat_cols = df[['gender', 'ever_married', 'work_type', 'Residence_type', 'smoking_status']]
+        df['heart_disease']=df['heart_disease'].astype(str)
+        df['hypertension']=df['hypertension'].astype(str)
+        cat_cols = df[['gender', 'hypertension', 'ever_married', 'heart_disease', 'work_type', 'Residence_type', 'smoking_status']]
         for col in cat_cols:
             le.fit(df[col])
             df[col] = le.transform(df[col])
             X = df.iloc[-1:]# X are user inputs to predict, format: dataframe
 
 
-        clf = pkl.load(open('best_pipeline1.pkl', 'rb'))
+        clf = pkl.load(open('best_pipeline.pkl', 'rb'))
 
         prediction_label = clf.predict(X)
         prediction_label = int(prediction_label)
@@ -99,11 +100,6 @@ def main():
     return render_template("website.html", genders=genders, hypertensions=hypertensions, heart_diseases=heart_diseases,
                                ever_marrieds=ever_marrieds, work_types=work_types, Residence_types=Residence_types,
                                smoking_statuses=smoking_statuses, prediction=prediction)
-
-
-
-
-
 
 
 
