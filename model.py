@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 import pickle as pkl
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, RandomizedSearchCV, RepeatedStratifiedKFold
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.pipeline import Pipeline
-from xgboost import XGBClassifier
+from sklearn.utils.fixes import loguniform
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.metrics import (accuracy_score,
                              auc,
@@ -20,23 +20,46 @@ import seaborn as sns
 from mlxtend.classifier import StackingCVClassifier
 from sklearn.svm import SVC
 from transformation_pipeline import transformation_pipeline
+from sklearn.ensemble import (RandomForestClassifier,
+                              AdaBoostClassifier,
+                              GradientBoostingClassifier)
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier,DecisionTreeRegressor
+from sklearn.svm import SVC, LinearSVC
+from imblearn.under_sampling import RandomUnderSampler
+from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
+from transformation_pipeline import transformation_pipeline,transformation_pipeline_nores
+
 
 random_state = 42
 
-
-#load data
 df = pd.read_csv("data_strokes_prediction.csv")
 
-# transform data
 X_res,y_res = transformation_pipeline(df)
 
-#split
-X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=random_state)
+X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.33, random_state=random_state)
 
 
 
+
+
+# XGB_BEST_PARAMS = {'learning_rate': 0.1, 'max_depth': 9, 'n_estimators': 180}
+# pipeline = Pipeline(steps = [('scale',StandardScaler()), ("XGBC",XGBClassifier(random_state=random_state, params=XGB_BEST_PARAMS))])
+# pipeline=pipeline.fit(X_train,y_train)
+#
+#
+# print('X_train\n', X_train)
+# print('y_train\n', y_train)
+#
+# xg = XGBClassifier(random_state=random_state, params=XGB_BEST_PARAMS)
+# xg = xg.fit(X_res, y_res)
+# cross_val_scores = cross_val_score(xg, X_res, y_res, cv=5)
+# print("Cross-Validation Scores:", cross_val_scores)
+# print("Mean Cross-Validation Score:", np.mean(cross_val_scores))
 # # Hyperparameter tuning using GridSearch
-# estimator = XGBClassifier(objective='binary:logistic', nthread=4, seed=random_state)
+# estimator = XGBClassifier(learning_rate= 0.1, max_depth=9, n_estimators= 180)
 # parameters = {
 #     'max_depth': range(2, 10, 1),
 #     'n_estimators': range(60, 220, 40),
@@ -46,82 +69,119 @@ X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2,
 # # Get the best hyperparameters from GridSearch
 # best_params = grid_search.best_params_
 # print("Best Hyperparameters:", best_params)
+#
+# tuned_pred = pipeline.predict(X_test)
+#
+#
+# dt = pd.read_csv('data_test.csv')
+# print('dt\n', dt)
+#
+# X_test_dt, y_test_dt = transformation_pipeline_nores(dt)
+#
+#
+# prediction_label_dt = pipeline.predict(X_test_dt)
+# print('prediction_label_dt', prediction_label_dt)
+#
+#
+# print(classification_report(y_test_dt, prediction_label_dt))
+# print('Accuracy Score: ', accuracy_score(y_test_dt, prediction_label_dt))
+# print('Recall Score: ', recall_score(y_test_dt, prediction_label_dt))
+# print('\nConfusion matrix: \n', confusion_matrix(y_test_dt, prediction_label_dt))
+# print('\n Model :', 'XGB')
 
 
 
-XGB_BEST_PARAMS = {'learning_rate': 0.1, 'max_depth': 9, 'n_estimators': 180}
-
-xg = XGBClassifier(params=XGB_BEST_PARAMS, random_state=42)
 
 
-# Fit the training data to the model
-xg = xg.fit(X_train, y_train)
 
-# Get cv scores
-cross_val_scores = cross_val_score(xg, X_res, y_res, cv=5)
+
+
+# LGBM_BEST_PARAMS = { }
+# XGB_BEST_PARAMS = {'learning_rate': 0.1, 'max_depth': 9, 'n_estimators': 180}
+# pipeline = Pipeline(steps = [('scale',StandardScaler()), ("XGBC",LGBMClassifier(random_state=random_state))])
+# pipeline=pipeline.fit(X_train,y_train)
+#
+#
+# print('X_train\n', X_train)
+# print('y_train\n', y_train)
+#
+# xg = LGBMClassifier(random_state=random_state)
+# xg = xg.fit(X_res, y_res)
+# cross_val_scores = cross_val_score(xg, X_res, y_res, cv=5)
+# print("Cross-Validation Scores:", cross_val_scores)
+# print("Mean Cross-Validation Score:", np.mean(cross_val_scores))
+#
+#
+# tuned_pred = pipeline.predict(X_test)
+#
+#
+# dt = pd.read_csv('data_test.csv')
+# print('dt\n', dt)
+#
+# X_test_dt, y_test_dt = transformation_pipeline_nores(dt)
+#
+#
+# prediction_label_dt = pipeline.predict(X_test_dt)
+# print('prediction_label_dt', prediction_label_dt)
+#
+#
+# print(classification_report(y_test_dt, prediction_label_dt))
+# print('Accuracy Score: ', accuracy_score(y_test_dt, prediction_label_dt))
+# print('Recall Score: ', recall_score(y_test_dt, prediction_label_dt))
+# print('\nConfusion matrix: \n', confusion_matrix(y_test_dt, prediction_label_dt))
+# print('\n Model :', 'XGB')
+
+
+
+LR_BEST_PARAMS = { }
+pipeline = Pipeline(steps = [('scale',StandardScaler()), ("XGBC",LogisticRegression(random_state=random_state))])
+pipeline=pipeline.fit(X_train,y_train)
+
+
+print('X_train\n', X_train)
+print('y_train\n', y_train)
+
+lr = LogisticRegression(random_state=random_state, C= 10, penalty= 'l1', solver= 'liblinear')
+lr = lr.fit(X_res, y_res)
+cross_val_scores = cross_val_score(lr, X_res, y_res, cv=5)
 print("Cross-Validation Scores:", cross_val_scores)
 print("Mean Cross-Validation Score:", np.mean(cross_val_scores))
 
 
-# Get feature importances
-feature_importances = xg.feature_importances_
-
-# Create a DataFrame for visualization
-importances_df = pd.DataFrame({
-    'Feature': X_res.columns,
-    'Importance': feature_importances
-})
-
-# Sort the DataFrame by importance in descending order
-importances_df = importances_df.sort_values(by='Importance', ascending=False)
-
-# Plotting feature importances
-plt.figure(figsize=(10, 8))
-sns.barplot(data=importances_df, x='Importance', y='Feature', color='b')
-plt.title('Feature Importance XGBoost')
-plt.xlabel('Importance')
-plt.ylabel('Feature')
-plt.show()
-
-
-
-# train
-
-pipeline = Pipeline(steps = [('scale',StandardScaler()), ("XGBC",XGBClassifier(random_state=random_state, params=XGB_BEST_PARAMS))])
-pipeline.fit(X_train,y_train)
-
-
-# predict
 tuned_pred = pipeline.predict(X_test)
 
 
-# print report
-print(classification_report(y_test,tuned_pred))
-print('Accuracy Score: ',accuracy_score(y_test,tuned_pred))
-print('Recall Score: ',recall_score(y_test,tuned_pred))
-print('\nConfusion matrix: \n',confusion_matrix(y_test, tuned_pred))
-print('\n Model :','XGBoost')
+dt = pd.read_csv('data_test.csv')
+print('dt\n', dt)
+
+X_test_dt, y_test_dt = transformation_pipeline_nores(dt)
+
+
+prediction_label_dt = pipeline.predict(X_test_dt)
+print('prediction_label_dt', prediction_label_dt)
+
+
+print(classification_report(y_test_dt, prediction_label_dt))
+print('Accuracy Score: ', accuracy_score(y_test_dt, prediction_label_dt))
+print('Recall Score: ', recall_score(y_test_dt, prediction_label_dt))
+print('\nConfusion matrix: \n', confusion_matrix(y_test_dt, prediction_label_dt))
+print('\n Model :', 'LR')
 
 
 
-# VERIFICATION BY 20 UNSEEN ROWS (10 first P & 10 last N)
+param_grid = {
+    'C': [0.001, 0.01, 0.1, 1, 10, 100],
+    'penalty': ['l1', 'l2'],
+    'solver': ['liblinear', 'lbfgs']
+}
+logistic_regression = LogisticRegression(random_state=random_state, params={'C': 10, 'penalty': 'l1', 'solver': 'liblinear'})
+grid_search = GridSearchCV(estimator=logistic_regression, param_grid=param_grid, scoring='roc_auc', cv=10, n_jobs=-1)
+grid_search.fit(X_train, y_train)
+best_params = grid_search.best_params_
+print("Best Hyperparameters:", best_params)
 
 
-print('VERIFICATION BY 20 UNSEEN ROWS (10 first P & 10 last N) :  \n')
-input= pd.read_csv('data_test.csv')
 
-input = input. iloc[:,:-1]
-input=input.drop(columns=input.columns[0], axis=1)
 
-le = LabelEncoder()
-cat_cols = input[['gender', 'ever_married', 'work_type', 'Residence_type', 'smoking_status']]
-for col in cat_cols:
-    le.fit(input[col])
-    input[col] = le.transform(input[col])
 
-# print('input',input)
-my_pred = pipeline.predict(input)
-print('PREDS :' , my_pred)
 
-# export model
-pkl.dump(pipeline, open('best_pipeline.pkl', 'wb'))

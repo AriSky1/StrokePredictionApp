@@ -46,7 +46,7 @@ from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.utils import shuffle
 from IPython.display import display
-
+from transformation_pipeline import transformation_pipeline
 
 
 random_state=42
@@ -62,41 +62,39 @@ SVC_BEST_PARAMS = {}
 #load data
 df = pd.read_csv("data_strokes_prediction.csv")
 
-#drop gender other
-df = df[(df['gender'] != 'Other')]
 
-# fill null values with regression on numerical values
-DT_bmi_pipe = Pipeline( steps=[
-                               ('scale',StandardScaler()),
-                               ('lr',DecisionTreeRegressor(random_state=random_state))
-                              ])
-X = df[['age','gender','bmi']].copy()
-X.gender = X.gender.replace({'Male':0,'Female':1,'Other':-1}).astype(np.uint8)
-Missing = X[X.bmi.isna()]
-X = X[~X.bmi.isna()]
-Y = X.pop('bmi')
-DT_bmi_pipe.fit(X,Y)
-predicted_bmi = pd.Series(DT_bmi_pipe.predict(Missing[['age','gender']]),index=Missing.index)
-df.loc[Missing.index,'bmi'] = round(predicted_bmi)
+X_res,y_res=transformation_pipeline(df)
+# #drop gender other
+# df = df[(df['gender'] != 'Other')]
+#
+# # fill null values with regression on numerical values
+# DT_bmi_pipe = Pipeline( steps=[
+#                                ('scale',StandardScaler()),
+#                                ('lr',DecisionTreeRegressor(random_state=random_state))
+#                               ])
+# X = df[['age','gender','bmi']].copy()
+# X.gender = X.gender.replace({'Male':0,'Female':1,'Other':-1}).astype(np.uint8)
+# Missing = X[X.bmi.isna()]
+# X = X[~X.bmi.isna()]
+# Y = X.pop('bmi')
+# DT_bmi_pipe.fit(X,Y)
+# predicted_bmi = pd.Series(DT_bmi_pipe.predict(Missing[['age','gender']]),index=Missing.index)
+# df.loc[Missing.index,'bmi'] = round(predicted_bmi)
+#
+# # transform : encode types object into categories
+# le = LabelEncoder()
+# df = df.drop(['id'], axis=1)  # drop useless column
+# cat_cols = df.select_dtypes(include=['object']).columns.tolist()
+# for col in cat_cols:
+#        le.fit(df[col])
+#        df[col] = le.transform(df[col])
+#
+#
+#
+# X,y = df.drop('stroke', axis = 1), df['stroke']
 
-# transform : encode types object into categories
-le = LabelEncoder()
-df = df.drop(['id'], axis=1)  # drop useless column
-cat_cols = df.select_dtypes(include=['object']).columns.tolist()
-for col in cat_cols:
-       le.fit(df[col])
-       df[col] = le.transform(df[col])
 
-
-
-X,y = df.drop('stroke', axis = 1), df['stroke']
-
-
-# undersampling + oversampling
-over = SMOTE(sampling_strategy = 1)
-under = RandomUnderSampler(sampling_strategy = 0.1)
-X_res_u, y_res_u = under.fit_resample(X, y)
-X_res, y_res = over.fit_resample(X_res_u, y_res_u)
+#
 
 #split
 X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=random_state)

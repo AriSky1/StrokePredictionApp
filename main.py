@@ -2,16 +2,23 @@ from flask import Flask, request, make_response, render_template, flash
 import pandas as pd
 import pickle as pkl
 from sklearn.preprocessing import LabelEncoder
-
+from transformation_pipeline import transformation_pipeline
+import pandas as pd
+import numpy as np
+from imblearn.over_sampling import SMOTE
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.tree import DecisionTreeRegressor
+from imblearn.under_sampling import RandomUnderSampler
 
 app = Flask(__name__)
 
 
 
 
-@app.errorhandler(ValueError)
-def value_error(e):
-    return "A value error occurred!"
+# @app.errorhandler(ValueError)
+# def value_error(e):
+#     return "A value error occurred!"
 
 
 
@@ -23,8 +30,12 @@ work_types = ['Private', 'Self-employed', 'Government job', 'Children', 'Never w
 Residence_types = ['Urban', 'Rural']
 smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
 
+random_state=42
+
 
 @app.route('/', methods=['GET', 'POST'])
+
+
 
 def main():
 
@@ -43,31 +54,105 @@ def main():
         smoking_status = request.form.get('smoking_status')
 
 
-        usr_input =pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]],
-                                columns=['gender','age','hypertension','heart_disease','ever_married','work_type','Residence_type','avg_glucose_level','bmi','smoking_status'])
-
+        # usr_input =pd.DataFrame([[gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status]],
+        #                         columns=['gender','age','hypertension','heart_disease','ever_married','work_type','Residence_type','avg_glucose_level','bmi','smoking_status'])
 
 
         df = pd.read_csv(r'data_strokes_prediction.csv')
-        df=df.drop(columns=['id','stroke'])
-        df=df.append(usr_input)
+        test_df = pd.read_csv('data_test.csv')
+        print('test_df', test_df)
+
+        df=df.drop(columns=['id'])
+        test_df = test_df.drop(columns=['id'])
+
+
+        # usr_input =pd.DataFrame([gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status], index=df.columns )
+
+        # Dictionary of columns
+        usr_input = {'gender': gender, 'age': age, 'hypertension': hypertension, 'heart_disease': heart_disease, 'ever_married': ever_married, 'work_type': work_type, 'Residence_type': Residence_type, 'avg_glucose_level': avg_glucose_level, 'bmi': bmi, 'smoking_status' :smoking_status}
+
+        usr_input_test = test_df.iloc[0].to_dict()
+        usr_input_test1 = test_df.iloc[1].to_dict()
+        usr_input_test2 = test_df.iloc[2].to_dict()
+        usr_input_test3 = test_df.iloc[3].to_dict()
+        usr_input_test4= test_df.iloc[4].to_dict()
+
+
+        print('test_df', test_df)
+        # usr_input = pd.DataFrame.from_dict(usr_input)
+        # print('usr_input',usr_input)
+        # print('type_usr_input',type(usr_input))
+
+        s = pd.Series(usr_input, index=usr_input.keys())
+        ss = pd.Series(usr_input_test, index=usr_input_test.keys())
+        print('s      \n', s)
+
+
+        d = pd.DataFrame(s).transpose()
+
+
+
+        df=df.append(d)
+
+
+
+
+        # print("df types after append :         \n", df.dtypes)
+        print("df tail after append:         \n", df.tail(5))
+        # df['heart_disease']=df['heart_disease'].astype(str)
+        # df['hypertension']=df['hypertension'].astype(str)
+        # print('usr_input : ', usr_input)
+
+
+
+        df['gender'] = df['gender'].astype(str)
+        df['age'] = df['age'].astype(float)
+        # df['hypertension'] = df['hypertension'].astype(int)
+        df['hypertension'] = df['hypertension'].astype(str)
+        # df['heart_disease'] = df['heart_disease'].astype(int)
+        df['heart_disease'] = df['heart_disease'].astype(str)
+        df['ever_married'] = df['ever_married'].astype(str)
+        df['work_type'] = df['work_type'].astype(str)
+        df['Residence_type'] = df['Residence_type'].astype(str)
+        df['avg_glucose_level'] = df['avg_glucose_level'].astype(float)
+        df['bmi'] = df['bmi'].astype(float)
+        df['smoking_status'] = df['smoking_status'].astype(str)
+
+
+
         le = LabelEncoder()
-        df['heart_disease']=df['heart_disease'].astype(str)
-        df['hypertension']=df['hypertension'].astype(str)
-        cat_cols = df[['gender', 'hypertension', 'ever_married', 'heart_disease', 'work_type', 'Residence_type', 'smoking_status']]
+        cat_cols = df.select_dtypes(include=['object']).columns.tolist()
         for col in cat_cols:
             le.fit(df[col])
             df[col] = le.transform(df[col])
-            X = df.iloc[-1:]# X are user inputs to predict, format: dataframe
 
 
-        clf = pkl.load(open('best_pipeline.pkl', 'rb'))
 
-        prediction_label = clf.predict(X)
+
+
+
+        # create X,y
+        X, y = df.drop('stroke', axis=1), df['stroke']
+
+
+
+
+        topredict = X.iloc[-1:]
+
+
+
+
+        clf = pkl.loads(open('best_pipeline1.pkl', 'rb'))
+
+
+        prediction_label = clf.predict(topredict)
         prediction_label = int(prediction_label)
-        print(prediction_label, type(prediction_label))
-        prediction_score = clf.predict_proba(X)
-        print(prediction_score)
+        # print(prediction_label, type(prediction_label))
+        prediction_score = clf.predict_proba(topredict)
+        # print(prediction_score)
+
+
+
 
         if prediction_label == 0:
             # prediction = ' On ' + str(round(prediction_score[0][0] * 100)) + ' % sure there is low risk.'
@@ -94,8 +179,8 @@ def main():
 
 
     if request.method == "GET":
-        # prediction = "Enter data"
-        prediction = "Enter data"
+
+        prediction = ""
 
 
 

@@ -23,27 +23,31 @@
 <div id='stack' style="max-width: 1200px; display: flex; align-items:center; flex-wrap: wrap; justify-content: left;  ">
 
 
-              <p>  Gender  <select name= "gender" method="POST" action="/">
-                {% for gender in genders %}
-                <option value= "{{gender}}" SELECTED>{{gender}}</option>"
-                {% endfor %}
-            </select>
-            </p>
+                  <p>  Gender  <select name= "gender" method="POST" action="/">
+                      <option value=" "></option>
+                    {% for gender in genders %}
 
-            <p> Age <input type="number" name="age", placeholder="Enter value" required/></p>
+                    <option >{{gender}}</option>"
+                    {% endfor %}
+                </select>
+                </p>
 
-            <p> Hypertension <select name="hypertension" method="POST" action="/">
-                {% for hypertension in hypertensions %}
-                <option value= "{{hypertension}}" SELECTED>{{hypertension}}</option>"
-                {% endfor %}
-            </select></p>
+                <p> Age <input type="number" name="age", placeholder="" required/></p>
+
+                <p> Hypertension <select name="hypertension" method="POST" action="/">
+                    <option value="" ></option>
+                    {% for hypertension in hypertensions %}
+                    <option >{{ hypertension }}</option>
+                    {% endfor %}
+                </select></p>
 
 
-                            <p> Heart Desease <select name="heart_disease" method="POST" action="/">
+                <p> Heart Desease <select name="heart_disease" method="POST" action="/">
+                 <option value=" "></option>
                 {% for heart_disease in heart_diseases %}
-                <option value= "{{heart_disease}}" SELECTED>{{heart_disease}}</option>"
+                <option  SELECED>{{heart_disease}}</option>"
                 {% endfor %}
-            </select></p>
+                 </select></p>
 
 
                        </p>
@@ -51,34 +55,38 @@
 
 
                 <p>Ever married <select name="ever_married" method="POST" action="/">
+                    <option value=""></option>
                 {% for ever_married in ever_marrieds %}
-                <option value= "{{ever_married}}" SELECTED>{{ever_married}}</option>"
+                <option >{{ever_married}}</option>"
                 {% endfor %}
             </select></p>
 
 
 
                 <p> Work type<select name="work_type" method="POST" action="/">
+                    <option value=""></option>
                 {% for work_type in work_types %}
-                <option value= "{{work_type}}" SELECTED>{{work_type}}</option>"
+                <option >{{work_type}}</option>"
                 {% endfor %}
             </select></p>
 
                 <p>Residence type <select name="Residence_type" method="POST" action="/">
+                     <option value=""></option>
                 {% for Residence_type in Residence_types %}
-                <option value= "{{Residence_type}}" SELECTED>{{Residence_type}}</option>"
+                <option >{{Residence_type}}</option>"
                 {% endfor %}
             </select></p>
 
 
-                <p> Average glucose level <input type="float" name="avg_glucose_level", placeholder="Enter value" required/>
+                <p> Glucose level <input type="float" name="avg_glucose_level", placeholder="" required/>
               </p>
 
-                <p>BMI  <input type="float" name="bmi", placeholder="Enter value" required/>
+                <p>BMI  <input type="float" name="bmi", placeholder="" required/>
 
                 <p>Smoking status <select name="smoking_status" method="POST" action="/">
+                <option value=""></option>
                 {% for smoking_status in smoking_statuses %}
-                <option value= "{{smoking_status}}" SELECTED>{{smoking_status}}</option>"
+                <option >{{smoking_status}}</option>"
                 {% endfor %}
             </select></p>
 
