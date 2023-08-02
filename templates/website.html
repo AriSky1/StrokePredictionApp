@@ -2,11 +2,21 @@
 <html>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
+
+
+
+
+
+
+
     <head>
         <title>Strokes Prediction App</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&display=swap" rel="stylesheet">
+
+
+
 
     </head>
 
@@ -17,7 +27,7 @@
            <div style=""><h1>Stroke risk estimator</h1></div>
             <div style="display: flex;justify-content: center; align-items: center;">
 
-        <div style=><img src='static/icon.png' width="250px", height="200px" ></div>
+<!--        <div style=><img src='static/icon.png' width="250px", height="200px" ></div>-->
 
 
 
@@ -31,7 +41,7 @@
 
 
 <div style="display: flex; justify-content: center; align-items: center; ">
-<div id='stack' style="max-width: 1200px; display: flex; align-items:center; flex-wrap: wrap; justify-content: left;  ">
+<div id='stack' style="max-width: 1200px; display: flex; align-items:center; flex-wrap: wrap; justify-content: left; padding-left:100px; ">
 
 
                   <p>  Gender  <select name= "gender" method="POST" action="/">
@@ -101,7 +111,7 @@
                 {% endfor %}
             </select></p>
 
-            <div id="btn" ><button type="submit" value="Submit" name="submit_btn">Verify</button></div>
+<!--            <div id="btn" ><button type="submit" value="Submit" name="submit_btn">OK</button></div>-->
 
 
 
@@ -111,12 +121,20 @@
 
 </div>
 
+            <div >
+
+
+                <button id="submit_btn"  class="submit_btn" type="submit" value="Submit" name="submit_btn" ></button>
+
+
+            </div>
+ <h3 id='hideMe' style= 'color:{{ color }};'>{{ output }} </h3>
 
 
         </form>
 
 
-    <h3 id='hideMe' style= 'color:{{ color }};'>{{ output }} </h3>
+
     </body>
 </html>
 

@@ -1,21 +1,22 @@
 h1 {
-  font-size: 3.5em;
+  font-size: 3em;
   margin-top: 40px;
   padding-top: 0px;
   text-align: center;
   letter-spacing: 2px;
-  color: #1cc78b;
+  color: #d1d1d1;
   font-family: Montserrat Alternates;
 }
 
 
 h3 {
   font-size: 2em;
-  margin-top: 30px;
+  margin-top: 290px;
   text-align: center;
   letter-spacing: 1px;
 
   font-family: Montserrat Alternates;
+
 }
 
 p {
@@ -81,17 +82,27 @@ button {
   font-size: 2.5em;
   color: #1cc78b;
   border-color:#131324;
-  padding-left:200px;
-    background: transparent;
-
-
-}
-
-btn {
-        padding-left: 50px;
+  padding-right:0px;
+  background: transparent;
+  position:absolute;
+  cursor: pointer;
 
 }
 
+#submit_btn {
+ width: 300px;
+ height: 250px;
+ background-image: url("./icon.png");
+ background-size: contain;
+   cursor: pointer;
+}
+
+#submit_btn:hover {
+ width: 340px;
+ height: 290px;
+  background-image: url("./icon2.png");
+   background-size: contain;
+}
 
 html, body {
     height:100%;
@@ -99,7 +110,6 @@ html, body {
     margin:0;
     padding:0;
 }
-
 
 
 
