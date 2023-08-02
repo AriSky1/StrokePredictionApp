@@ -41,140 +41,82 @@ X_res,y_res = transformation_pipeline(df)
 
 X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.33, random_state=random_state)
 
+C=10
+penalty='l2'
+solver='liblinear'
 
+print('\n Model :', 'Logistic Regression\n')
 
-
-
-# XGB_BEST_PARAMS = {'learning_rate': 0.1, 'max_depth': 9, 'n_estimators': 180}
-# pipeline = Pipeline(steps = [('scale',StandardScaler()), ("XGBC",XGBClassifier(random_state=random_state, params=XGB_BEST_PARAMS))])
-# pipeline=pipeline.fit(X_train,y_train)
-#
-#
-# print('X_train\n', X_train)
-# print('y_train\n', y_train)
-#
-# xg = XGBClassifier(random_state=random_state, params=XGB_BEST_PARAMS)
-# xg = xg.fit(X_res, y_res)
-# cross_val_scores = cross_val_score(xg, X_res, y_res, cv=5)
-# print("Cross-Validation Scores:", cross_val_scores)
-# print("Mean Cross-Validation Score:", np.mean(cross_val_scores))
-# # Hyperparameter tuning using GridSearch
-# estimator = XGBClassifier(learning_rate= 0.1, max_depth=9, n_estimators= 180)
-# parameters = {
-#     'max_depth': range(2, 10, 1),
-#     'n_estimators': range(60, 220, 40),
-#     'learning_rate': [0.1, 0.01, 0.05] }
-# grid_search = GridSearchCV(estimator=estimator, param_grid=parameters, scoring='roc_auc', n_jobs=10, cv=10, verbose=True)
-# grid_search.fit(X_train, y_train)
-# # Get the best hyperparameters from GridSearch
-# best_params = grid_search.best_params_
-# print("Best Hyperparameters:", best_params)
-#
-# tuned_pred = pipeline.predict(X_test)
-#
-#
-# dt = pd.read_csv('data_test.csv')
-# print('dt\n', dt)
-#
-# X_test_dt, y_test_dt = transformation_pipeline_nores(dt)
-#
-#
-# prediction_label_dt = pipeline.predict(X_test_dt)
-# print('prediction_label_dt', prediction_label_dt)
-#
-#
-# print(classification_report(y_test_dt, prediction_label_dt))
-# print('Accuracy Score: ', accuracy_score(y_test_dt, prediction_label_dt))
-# print('Recall Score: ', recall_score(y_test_dt, prediction_label_dt))
-# print('\nConfusion matrix: \n', confusion_matrix(y_test_dt, prediction_label_dt))
-# print('\n Model :', 'XGB')
-
-
-
-
-
-
-
-
-# LGBM_BEST_PARAMS = { }
-# XGB_BEST_PARAMS = {'learning_rate': 0.1, 'max_depth': 9, 'n_estimators': 180}
-# pipeline = Pipeline(steps = [('scale',StandardScaler()), ("XGBC",LGBMClassifier(random_state=random_state))])
-# pipeline=pipeline.fit(X_train,y_train)
-#
-#
-# print('X_train\n', X_train)
-# print('y_train\n', y_train)
-#
-# xg = LGBMClassifier(random_state=random_state)
-# xg = xg.fit(X_res, y_res)
-# cross_val_scores = cross_val_score(xg, X_res, y_res, cv=5)
-# print("Cross-Validation Scores:", cross_val_scores)
-# print("Mean Cross-Validation Score:", np.mean(cross_val_scores))
-#
-#
-# tuned_pred = pipeline.predict(X_test)
-#
-#
-# dt = pd.read_csv('data_test.csv')
-# print('dt\n', dt)
-#
-# X_test_dt, y_test_dt = transformation_pipeline_nores(dt)
-#
-#
-# prediction_label_dt = pipeline.predict(X_test_dt)
-# print('prediction_label_dt', prediction_label_dt)
-#
-#
-# print(classification_report(y_test_dt, prediction_label_dt))
-# print('Accuracy Score: ', accuracy_score(y_test_dt, prediction_label_dt))
-# print('Recall Score: ', recall_score(y_test_dt, prediction_label_dt))
-# print('\nConfusion matrix: \n', confusion_matrix(y_test_dt, prediction_label_dt))
-# print('\n Model :', 'XGB')
-
-
-
-LR_BEST_PARAMS = { }
-pipeline = Pipeline(steps = [('scale',StandardScaler()), ("XGBC",LogisticRegression(random_state=random_state))])
+pipeline = Pipeline(steps = [('scale',StandardScaler()), ("LR",LogisticRegression(random_state=random_state, C=C, penalty=penalty, solver=solver))])
 pipeline=pipeline.fit(X_train,y_train)
-
-
-print('X_train\n', X_train)
-print('y_train\n', y_train)
-
-lr = LogisticRegression(random_state=random_state, C= 10, penalty= 'l1', solver= 'liblinear')
+lr = LogisticRegression(random_state=random_state, C=C, penalty=penalty, solver= solver)
 lr = lr.fit(X_res, y_res)
 cross_val_scores = cross_val_score(lr, X_res, y_res, cv=5)
 print("Cross-Validation Scores:", cross_val_scores)
 print("Mean Cross-Validation Score:", np.mean(cross_val_scores))
 
 
-tuned_pred = pipeline.predict(X_test)
 
+# TEST ON UNSEEN X_test
+print('\nTEST ON UNSEEN X_test\n')
+
+prediction_label_X_test = pipeline.predict(X_test)
+
+print(classification_report(y_test, prediction_label_X_test))
+print('Accuracy Score: ', accuracy_score(y_test, prediction_label_X_test))
+print('Recall Score: ', recall_score(y_test, prediction_label_X_test))
+print('\nConfusion matrix: \n', confusion_matrix(y_test, prediction_label_X_test))
+
+
+
+
+
+# TEST ON UNSEEN X_test (20 last)
+print('\nTEST ON UNSEEN X_test (20 last)\n')
+
+prediction_label_X_test = pipeline.predict(X_test.tail(20))
+
+real  = y_test.tail(20).values.tolist()
+real = ''.join(str(num) for num in real)
+pred = ''.join(str(num) for num in prediction_label_X_test)
+print('\nReal laabels VS Predicted labels\n')
+print( real)
+print( pred, '\n')
+
+
+print(classification_report(y_test.tail(20), prediction_label_X_test))
+print('Accuracy Score: ', accuracy_score(y_test.tail(20), prediction_label_X_test))
+print('Recall Score: ', recall_score(y_test.tail(20), prediction_label_X_test))
+print('\nConfusion matrix: \n', confusion_matrix(y_test.tail(20), prediction_label_X_test))
+
+
+
+# TEST On UNSEEN EXTERNAL DATASET
+print('\nTEST On UNSEEN EXTERNAL DATASE\n')
 
 dt = pd.read_csv('data_test.csv')
-print('dt\n', dt)
-
 X_test_dt, y_test_dt = transformation_pipeline_nores(dt)
-
-
 prediction_label_dt = pipeline.predict(X_test_dt)
-print('prediction_label_dt', prediction_label_dt)
+print('\nReal laabels VS Predicted labels\n')
+print('1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0')
+print(prediction_label_dt, '\n')
 
 
 print(classification_report(y_test_dt, prediction_label_dt))
 print('Accuracy Score: ', accuracy_score(y_test_dt, prediction_label_dt))
 print('Recall Score: ', recall_score(y_test_dt, prediction_label_dt))
 print('\nConfusion matrix: \n', confusion_matrix(y_test_dt, prediction_label_dt))
-print('\n Model :', 'LR')
+
 
 
 
 param_grid = {
-    'C': [0.001, 0.01, 0.1, 1, 10, 100],
-    'penalty': ['l1', 'l2'],
+    # 'C': [0.001, 0.01, 0.1, 1, 10, 100],
+    'C': [ 1, 10, 100],
+    'penalty': [ 'l2'],
     'solver': ['liblinear', 'lbfgs']
 }
-logistic_regression = LogisticRegression(random_state=random_state, params={'C': 10, 'penalty': 'l1', 'solver': 'liblinear'})
+logistic_regression = LogisticRegression(random_state=random_state)
 grid_search = GridSearchCV(estimator=logistic_regression, param_grid=param_grid, scoring='roc_auc', cv=10, n_jobs=-1)
 grid_search.fit(X_train, y_train)
 best_params = grid_search.best_params_
@@ -182,6 +124,6 @@ print("Best Hyperparameters:", best_params)
 
 
 
-
+pkl.dump(pipeline, open('model.pkl', 'wb'))
 
 

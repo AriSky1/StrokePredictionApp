@@ -2,6 +2,7 @@ stroke_env
 *.pyc
 .DS_Store
 *.log*
-#*.ipynb*
 *.mpeg*
 *.ipynb
+models_other.py
+main_model_merged.py

@@ -1,11 +1,11 @@
 import pandas as pd
 import numpy as np
 from imblearn.over_sampling import SMOTE
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.tree import DecisionTreeRegressor
 from imblearn.under_sampling import RandomUnderSampler
-pd.options.mode.chained_assignment = None  # default='warn'
+pd.options.mode.chained_assignment = None
 
 random_state = 42
 
@@ -32,7 +32,7 @@ def transformation_pipeline(df):
     # fill null values with regression on numerical values
     DT_bmi_pipe = Pipeline( steps=[
                                    ('scale',StandardScaler()),
-                                   ('lr',DecisionTreeRegressor(random_state=random_state))
+                                   ('lr',DecisionTreeRegressor(random_state=42))
                                   ])
     X = df[['age','gender','bmi']].copy()
     X.gender = X.gender.replace({'Male':0,'Female':1,'Other':-1}).astype(np.uint8)
@@ -69,12 +69,13 @@ def transformation_pipeline(df):
     under = RandomUnderSampler(sampling_strategy = 0.1)
     X_res_u, y_res_u = under.fit_resample(X, y)
     X_res, y_res = over.fit_resample(X_res_u, y_res_u)
-    print('X_res shape\n', X_res.shape)
-    print('y_res shape\n', y_res.shape)
-
-    print('y_res balance\n', y_res.value_counts())
+    # print('X_res shape\n', X_res.shape)
+    # print('y_res shape\n', y_res.shape)
+    #
+    # print('y_res balance\n', y_res.value_counts())
 
     return X_res, y_res
+
 
 
 
@@ -126,19 +127,10 @@ def transformation_pipeline_nores(df):
     df.bmi = df.bmi.astype(np.float64)
     df.age = df.age.astype(np.float64)
 
-        # df.to_csv('df_encoded.csv')
-        # create X,y
+
     X, y = df.drop('stroke', axis=1), df['stroke']
 
-        # undersampling + oversampling
-        # over = SMOTE(sampling_strategy=1)
-        # under = RandomUnderSampler(sampling_strategy=0.1)
-        # X_res_u, y_res_u = under.fit_resample(X, y)
-        # X_res, y_res = over.fit_resample(X_res_u, y_res_u)
-        # print('X_res shape\n', X_res.shape)
-        # print('y_res shape\n', y_res.shape)
 
-        # print('y_res balance\n', y_res.value_counts())
 
     return X, y
 
