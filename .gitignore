@@ -6,3 +6,4 @@ stroke_env
 *.ipynb
 models_other.py
 main_model_merged.py
+away.py
