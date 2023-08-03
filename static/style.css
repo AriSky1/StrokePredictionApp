@@ -4,18 +4,44 @@ h1 {
   padding-top: 0px;
   text-align: center;
   letter-spacing: 2px;
-  color: #d1d1d1;
+  color: grey;
   font-family: Montserrat Alternates;
+      font-weight: 400;
 }
 
 
-h3 {
+h2 {
   font-size: 2em;
-  margin-top: 290px;
+  font-family: Montserrat Alternates;
+  text-align: center;
+    margin: 0;
+    font-weight: 300;
+    padding-right: 30px;
+}
+
+h3 {
+  font-size: 3.5em;
+
+  text-align: center;
+  letter-spacing: 1px;
+  font-family: Montserrat Alternates;
+    margin: 0;
+    font-weight: 600;
+        padding-right: 30px;
+
+
+
+
+#hideMe2 {
+
+  font-size: 2em;
+  margin-top: 0px;
   text-align: center;
   letter-spacing: 1px;
 
   font-family: Montserrat Alternates;
+
+}
 
 }
 
@@ -27,6 +53,7 @@ p {
   color: grey;
   font-family: Montserrat Alternates;
   max-width: 200px;
+      font-weight: 400;
 }
 
 
@@ -41,17 +68,20 @@ select {
   border-radius: 1rem;
   background-color: #131324;
   font-family: Montserrat Alternates;
-    width: 200px;
-  height: 95px;
+    width: 240px;
+  height: 75px;
+   gap: 1rem;
   text-align: center;
   text-color: white;
   color: white;
     font-size: 1em;
     border-width: 1px;
+    font-weight: 600;
 
 }
 
 input {
+
   box-sizing: border-box;
   border-radius: 1rem;
   border: solid;
@@ -60,12 +90,14 @@ input {
   text-color: white;
   background-color:#131324;
   font-family: Montserrat Alternates;
-  gap: 2rem;
-  width: 200px;
-  height: 95px;
+  gap: 1rem;
+  width: 240px;
+  height: 75px;
   text-align: center;
-    font-size: 1.2em;
-        border-width: 1px;
+    font-size: 1em;
+    border-width: 1px;
+    font-weight: 600;
+
 
 }
 
@@ -76,32 +108,41 @@ button {
   background-color: #131324;
   font-family: Montserrat Alternates;
   gap: 2rem;
-  width: 200px;
-  height: 80px;
+  width: 250px;
+  height: 200px;
   text-align: center;
   font-size: 2.5em;
   color: #1cc78b;
   border-color:#131324;
-  padding-right:0px;
+  margin-right:40px;
   background: transparent;
-  position:absolute;
+ margin-top:30px;
   cursor: pointer;
 
 }
 
 #submit_btn {
- width: 300px;
- height: 250px;
+ width: 250px;
+ height: 200px;
  background-image: url("./icon.png");
  background-size: contain;
+     background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
    cursor: pointer;
+  padding-top:50px;
+
 }
 
 #submit_btn:hover {
- width: 340px;
- height: 290px;
+ width: 250px;
+ height: 200px;
   background-image: url("./icon2.png");
    background-size: contain;
+    background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    padding-top:50px;
 }
 
 html, body {
@@ -114,13 +155,39 @@ html, body {
 
 
 #hideMe {
-    -moz-animation: cssAnimation 0s ease-in 10s forwards;
+    -moz-animation: cssAnimation 0s ease-in 5s forwards;
     /* Firefox */
-    -webkit-animation: cssAnimation 0s ease-in 10s forwards;
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
     /* Safari and Chrome */
-    -o-animation: cssAnimation 0s ease-in 10s forwards;
+    -o-animation: cssAnimation 0s ease-in 5s forwards;
     /* Opera */
-    animation: cssAnimation 0s ease-in 10s forwards;
+    animation: cssAnimation 0s ease-in 5s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        visibility:hidden;
+    }
+}
+
+#hideMe2 {
+    -moz-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Firefox */
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Opera */
+    animation: cssAnimation 0s ease-in 5s forwards;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
 }

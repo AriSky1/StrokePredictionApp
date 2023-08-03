@@ -1,141 +1,141 @@
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+
+
+<head>
+    <title>Strokes Prediction App</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@200;300;400;600&display=swap"
+          rel="stylesheet">
+
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+
+</head>
+
+<body>
 
 
 
 
 
 
+<form , , , action="/" method="POST" name="form" style="text-align: center;">
 
 
-    <head>
-        <title>Strokes Prediction App</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&display=swap" rel="stylesheet">
+    <div style=""><h1>Stroke risk estimator</h1></div>
+    <div style="display: flex;justify-content: center; align-items: center;">
+
+        <!--        <div style=><img src='static/icon.png' width="250px", height="200px" ></div>-->
 
 
+    </div>
 
 
-    </head>
-
-    <body>
-        <form name="form", method="POST", action="/", style="text-align: center;">
+    <br>
 
 
-           <div style=""><h1>Stroke risk estimator</h1></div>
-            <div style="display: flex;justify-content: center; align-items: center;">
-
-<!--        <div style=><img src='static/icon.png' width="250px", height="200px" ></div>-->
-
+    <div style="display: flex; justify-content: center; align-items: center; ">
+        <div id='stack'
+             style="max-width: 1200px; display: flex; align-items:center; flex-wrap: wrap; justify-content: left; padding-left:100px; ">
 
 
+            <p> Gender <select name="gender" >
+
+                <option selected >{{ request.form['gender'] }}</option>
+                {% for gender in genders %}
+                <option>{{ gender }}</option>
+                {% endfor %}
+            </select>
+            </p>
+
+            <p> Age <input  name="age" placeholder="" required, type="number" value="{{ request.form['age'] }}"/></p>
+
+            <p> Hypertension <select name="hypertension">
+                <option selected >{{ request.form['hypertension'] }}</option>
+                {% for hypertension in hypertensions %}
+                <option>{{ hypertension }}</option>
+                {% endfor %}
+            </select></p>
 
 
-            </div>
-
-
-
-            <br>
-
-
-<div style="display: flex; justify-content: center; align-items: center; ">
-<div id='stack' style="max-width: 1200px; display: flex; align-items:center; flex-wrap: wrap; justify-content: left; padding-left:100px; ">
-
-
-                  <p>  Gender  <select name= "gender" method="POST" action="/">
-                      <option value=" "></option>
-                    {% for gender in genders %}
-
-                    <option >{{gender}}</option>"
-                    {% endfor %}
-                </select>
-                </p>
-
-                <p> Age <input type="number" name="age", placeholder="" required/></p>
-
-                <p> Hypertension <select name="hypertension" method="POST" action="/">
-                    <option value="" ></option>
-                    {% for hypertension in hypertensions %}
-                    <option >{{ hypertension }}</option>
-                    {% endfor %}
-                </select></p>
-
-
-                <p> Heart Desease <select name="heart_disease" method="POST" action="/">
-                 <option value=" "></option>
+            <p> Heart Desease <select name="heart_disease">
+                <option selected >{{ request.form['heart_disease'] }}</option>
                 {% for heart_disease in heart_diseases %}
-                <option  SELECED>{{heart_disease}}</option>"
+                <option >{{ heart_disease }}</option>
                 {% endfor %}
-                 </select></p>
+            </select></p>
 
 
-                       </p>
+            </p>
 
 
-
-                <p>Ever married <select name="ever_married" method="POST" action="/">
-                    <option value=""></option>
+            <p>Ever married <select name="ever_married">
+                <option selected >{{ request.form['ever_married'] }}</option>
                 {% for ever_married in ever_marrieds %}
-                <option >{{ever_married}}</option>"
+                <option>{{ever_married}}</option>
                 {% endfor %}
             </select></p>
 
 
-
-                <p> Work type<select name="work_type" method="POST" action="/">
-                    <option value=""></option>
+            <p> Work type<select name="work_type">
+                <option selected >{{ request.form['work_type'] }}</option>
                 {% for work_type in work_types %}
-                <option >{{work_type}}</option>"
+                <option>{{work_type}}</option>
                 {% endfor %}
             </select></p>
 
-                <p>Residence type <select name="Residence_type" method="POST" action="/">
-                     <option value=""></option>
+
+            <p>Residence type <select name="Residence_type">
+                <option selected >{{ request.form['Residence_type'] }}</option>
                 {% for Residence_type in Residence_types %}
-                <option >{{Residence_type}}</option>"
+                <option>{{Residence_type}}</option>
                 {% endfor %}
             </select></p>
 
 
-                <p> Glucose level <input type="float" name="avg_glucose_level", placeholder="" required/>
-              </p>
+            <p> Glucose level <input , name="avg_glucose_level" placeholder="" required, type="float"
+                                     value="{{ request.form['avg_glucose_level'] }}"/>
+            </p>
 
-                <p>BMI  <input type="float" name="bmi", placeholder="" required/>
+            <p>BMI <input , name="bmi" placeholder="" required type="float" value="{{ request.form['bmi'] }}"/>
 
-                <p>Smoking status <select name="smoking_status" method="POST" action="/">
-                <option value=""></option>
+            <p>Smoking status <select , name="smoking_status">
+                <option selected >{{ request.form['smoking_status'] }}</option>
                 {% for smoking_status in smoking_statuses %}
-                <option >{{smoking_status}}</option>"
+                <option>{{smoking_status}}</option>
                 {% endfor %}
             </select></p>
 
-<!--            <div id="btn" ><button type="submit" value="Submit" name="submit_btn">OK</button></div>-->
+            <!--            <div id="btn" ><button type="submit" value="Submit" name="submit_btn">OK</button></div>-->
 
 
+        </div>
 
 
-            </div>
+    </div>
+
+    <div ,style="'display: inline;vertical-align: top';height:100%; width:100%; overflow: hidden;" id='btn_div'>
+
+        <button class="submit_btn" id="submit_btn" name="submit_btn" type="submit" value="Submit"></button>
+        <h3 id='hideMe' style='color:{{ color }};'>{{ output }} </h3>
+        <h2 id='hideMe2' style='color:{{ color }};'>{{ certainty }} </h2>
 
 
-</div>
-
-            <div >
+    </div>
 
 
-                <button id="submit_btn"  class="submit_btn" type="submit" value="Submit" name="submit_btn" ></button>
+    <div style="  margin-top: 50px;">
 
 
-            </div>
- <h3 id='hideMe' style= 'color:{{ color }};'>{{ output }} </h3>
+    </div>
 
 
-        </form>
+</form>
 
 
-
-    </body>
+</body>
 </html>
 
 
