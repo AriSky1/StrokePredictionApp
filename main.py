@@ -10,10 +10,9 @@ genders = ['Female', 'Male']
 hypertensions = ['Yes', 'No']
 heart_diseases = ['Yes', 'No']
 ever_marrieds = ['Yes', 'No']
-work_types = ['Private', 'Self-employed', 'Govt_job', 'children', 'Never_worked']
+work_types = ['Private', 'Self-employed', 'Government job', 'Children', 'Never worked']
 Residence_types = ['Urban', 'Rural']
-smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
-certainty = ""
+smoking_statuses = ['Formerly smoked', 'Never smoked', 'Smokes', 'Unknown']
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -38,15 +37,22 @@ def main():
         s = pd.Series(usr_input, index=usr_input.keys())
         d = pd.DataFrame(s).transpose()
 
+        d['work_type'] = d['work_type'].replace('children', 'Children')
+        d['work_type'] = d['work_type'].replace('Govt_job', 'Government job')
+        d['work_type'] = d['work_type'].replace('Never_worked', 'Never worked')
+        d['smoking_status'] = d['smoking_status'].replace('never smoked', 'Never smoked')
+        d['smoking_status'] = d['smoking_status'].replace('formerly smoked', 'Formerly smoked')
+        d['smoking_status'] = d['smoking_status'].replace('smokes', 'Smokes')
+
         d.hypertension = d.hypertension.replace({'Yes': 1, 'No': 0, '': -1}).astype(np.uint8)
         d.heart_disease = d.heart_disease.replace({'Yes': 1, 'No': 0, '': -1}).astype(np.uint8)
         d.ever_married = d.ever_married.replace({'Yes': 1, 'No': 0, '': -1}).astype(np.uint8)
         d.work_type = d.work_type.replace(
-            {'Private': 2, 'Govt_job': 0, 'Self-employed': 3, 'children': 4, 'Never_worked': 1, '': -1}).astype(
+            {'Private': 2, 'Government job': 0, 'Self-employed': 3, 'Children': 4, 'Never worked': 1, '': -1}).astype(
             np.uint8)
         d.Residence_type = d.Residence_type.replace({'Urban': 1, 'Rural': 0, '': -1}).astype(np.uint8)
         d.smoking_status = d.smoking_status.replace(
-            {'never smoked': 2, 'smokes': 3, 'Unknown': 0, 'formerly smoked': 1, '': -1}).astype(np.uint8)
+            {'Never smoked': 2, 'Smokes': 3, 'Unknown': 0, 'Formerly smoked': 1, '': -1}).astype(np.uint8)
         d.gender = d.gender.replace({'Male': 0, 'Female': 1, 'Other': -1, '': -1}).astype(np.uint8)
         d.Residence_type = d.Residence_type.replace({'Urban': 1, 'Rural': 0, '': -1}).astype(np.uint8)
         d.avg_glucose_level = d.avg_glucose_level.astype(np.float64)
