@@ -1,4 +1,4 @@
-# StrokePredictionApp
+# StrokeRiskEstimator
 
 
 
@@ -17,5 +17,9 @@ The purpose is to create a tool that can estimate the rist of having a stroke an
 
 
 
-https://user-images.githubusercontent.com/105871709/225194366-21e4e0ba-f538-4ecd-930b-3b85320c98cc.mp4
+https://github.com/AriSky1/StrokePredictionApp/assets/105871709/f937a5fe-c814-43df-acb1-1ae99c786cfa
+
+
+
+
 
